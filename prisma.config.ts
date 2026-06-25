@@ -1,0 +1,1 @@
+// Prisma 5 config - not needed, using schema.prisma directly

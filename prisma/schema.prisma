@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+  PENDING
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  role      Role      @default(PENDING)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  processes Process[]
+  images    Image[]
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  icon        String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  processes   Process[]
+}
+
+model Process {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  categoryId  String
+  authorId    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  steps       Step[]
+  tags        ProcessTag[]
+}
+
+model Step {
+  id          String  @id @default(cuid())
+  processId   String
+  order       Int
+  title       String
+  description String?
+
+  process     Process @relation(fields: [processId], references: [id], onDelete: Cascade)
+  images      Image[]
+}
+
+model Image {
+  id        String @id @default(cuid())
+  stepId    String
+  url       String
+  alt       String?
+  order     Int    @default(0)
+  userId    String
+
+  step      Step   @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  user      User   @relation(fields: [userId], references: [id])
+}
+
+model Tag {
+  id        String      @id @default(cuid())
+  name      String      @unique
+  createdAt DateTime    @default(now())
+
+  processes ProcessTag[]
+}
+
+model ProcessTag {
+  processId String
+  tagId     String
+
+  process   Process @relation(fields: [processId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([processId, tagId])
+}
