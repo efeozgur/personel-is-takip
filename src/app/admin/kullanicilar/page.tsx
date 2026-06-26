@@ -75,6 +75,78 @@ export default function AdminKullanicilarPage() {
     } catch { alert("Bir hata oluştu."); }
   }
 
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editName, setEditName] = useState("");
+  const [editEmail, setEditEmail] = useState("");
+  const [editLoading, setEditLoading] = useState(false);
+  const [editError, setEditError] = useState("");
+
+  function openEdit(user: User) {
+    setEditingUser(user);
+    setEditName(user.name);
+    setEditEmail(user.email);
+    setEditError("");
+  }
+
+  function closeEdit() {
+    setEditingUser(null);
+    setEditName("");
+    setEditEmail("");
+    setEditError("");
+  }
+
+  async function submitEdit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!editingUser) return;
+
+    const trimmedName = editName.trim();
+    const trimmedEmail = editEmail.trim().toLowerCase();
+
+    if (trimmedName.length < 2) {
+      setEditError("İsim en az 2 karakter olmalıdır.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setEditError("Geçerli bir e-posta girin.");
+      return;
+    }
+
+    setEditLoading(true);
+    setEditError("");
+    try {
+      const res = await fetch(
+        `/api/admin/kullanicilar/${editingUser.id}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: trimmedName, email: trimmedEmail }),
+        }
+      );
+      const data = await res.json();
+      if (!res.ok) {
+        setEditError(data.error || "Güncelleme başarısız.");
+        return;
+      }
+      await fetchUsers();
+      closeEdit();
+    } catch {
+      setEditError("Bir hata oluştu.");
+    } finally {
+      setEditLoading(false);
+    }
+  }
+
+  // Modal açıkken ESC ile kapatma
+  useEffect(() => {
+    if (!editingUser) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeEdit();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editingUser]);
+
   if (!session || session.user.role !== "ADMIN") return null;
 
   if (loading) {
@@ -155,6 +227,14 @@ export default function AdminKullanicilarPage() {
                         <option value="ADMIN">Admin</option>
                       </select>
                       <button
+                        onClick={() => openEdit(user)}
+                        title="Düzenle"
+                        className="p-1.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                      </button>
+                      <button
                         onClick={() => resetPassword(user.id, user.email)}
                         title="Şifre Sıfırla"
                         className="p-1.5 text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors">
@@ -201,6 +281,14 @@ export default function AdminKullanicilarPage() {
                     <option value="ADMIN">Admin</option>
                   </select>
                   <button
+                    onClick={() => openEdit(user)}
+                    title="Düzenle"
+                    className="p-1.5 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                  </button>
+                  <button
                     onClick={() => resetPassword(user.id, user.email)}
                     title="Şifre Sıfırla"
                     className="p-1.5 text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors">
@@ -227,6 +315,88 @@ export default function AdminKullanicilarPage() {
           </div>
         )}
       </div>
+
+      {editingUser && (
+        <div
+          className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4"
+          onClick={closeEdit}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="glass-card w-full max-w-md p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-lg font-semibold text-gray-900 mb-1">
+              Kullanıcıyı Düzenle
+            </h2>
+            <p className="text-xs text-gray-400 mb-5">
+              ID: {editingUser.id}
+            </p>
+
+            {editError && (
+              <div className="bg-rose-50 border border-rose-200 text-rose-700 px-3.5 py-2.5 rounded-lg text-sm mb-4">
+                {editError}
+              </div>
+            )}
+
+            <form onSubmit={submitEdit} className="space-y-4">
+              <div>
+                <label
+                  htmlFor="edit-name"
+                  className="block text-sm font-medium text-zinc-900 mb-1.5"
+                >
+                  Ad Soyad
+                </label>
+                <input
+                  id="edit-name"
+                  type="text"
+                  required
+                  minLength={2}
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                  className="input"
+                  autoFocus
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="edit-email"
+                  className="block text-sm font-medium text-zinc-900 mb-1.5"
+                >
+                  E-posta
+                </label>
+                <input
+                  id="edit-email"
+                  type="email"
+                  required
+                  value={editEmail}
+                  onChange={(e) => setEditEmail(e.target.value)}
+                  className="input"
+                />
+              </div>
+
+              <div className="flex gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={closeEdit}
+                  className="btn-secondary text-sm flex-1"
+                >
+                  İptal
+                </button>
+                <button
+                  type="submit"
+                  disabled={editLoading}
+                  className="btn-primary text-sm flex-1"
+                >
+                  {editLoading ? "Kaydediliyor..." : "Kaydet"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

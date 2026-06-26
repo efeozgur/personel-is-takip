@@ -50,3 +50,7 @@ prisma/dev.db
 prisma/dev.db-journal
 prisma/*.db
 prisma/*.db-journal
+
+# Kullanıcı yüklemeleri (test amaçlı ekran görüntüleri)
+/public/uploads/*
+!/public/uploads/.gitkeep

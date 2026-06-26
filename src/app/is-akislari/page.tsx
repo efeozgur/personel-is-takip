@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import RatingStars from "@/components/RatingStars";
 
 interface Process {
   id: string;
@@ -13,6 +14,8 @@ interface Process {
   author: { id: string; name: string };
   tags: { tag: { id: string; name: string } }[];
   _count: { steps: number };
+  ratingCount: number;
+  ratingAverage: number;
   createdAt: string;
 }
 
@@ -181,13 +184,22 @@ function IsAkislariContent() {
                   ))}
                 </div>
                 <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-400 to-gray-500 flex items-center justify-center text-white text-[10px] font-medium">
-                      {process.author.name.charAt(0)}
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex items-center gap-1.5 flex-shrink-0">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-gray-400 to-gray-500 flex items-center justify-center text-white text-[10px] font-medium">
+                        {process.author.name.charAt(0)}
+                      </div>
+                      <span className="text-xs text-gray-400 truncate max-w-[80px]">{process.author.name}</span>
                     </div>
-                    <span className="text-xs text-gray-400">{process.author.name}</span>
+                    {process.ratingCount > 0 && (
+                      <RatingStars
+                        value={process.ratingAverage}
+                        count={process.ratingCount}
+                        size="sm"
+                      />
+                    )}
                   </div>
-                  <span className="text-xs text-gray-300">
+                  <span className="text-xs text-gray-300 flex-shrink-0">
                     {new Date(process.createdAt).toLocaleDateString("tr-TR")}
                   </span>
                 </div>

@@ -22,6 +22,7 @@ model User {
   processes      Process[]
   images         Image[]
   passwordResets PasswordReset[]
+  ratings        Rating[]
 }
 
 model Category {
@@ -36,18 +37,21 @@ model Category {
 }
 
 model Process {
-  id          String   @id @default(cuid())
-  title       String
-  description String?
-  categoryId  String
-  authorId    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String   @id @default(cuid())
+  title         String
+  description   String?
+  categoryId    String
+  authorId      String
+  ratingCount   Int      @default(0)
+  ratingAverage Float    @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   category Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   author   User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
   steps    Step[]
   tags     ProcessTag[]
+  ratings  Rating[]
 }
 
 model Step {
@@ -101,4 +105,19 @@ model PasswordReset {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  processId String
+  userId    String
+  score     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  process Process @relation(fields: [processId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([processId, userId])
+  @@index([processId])
 }

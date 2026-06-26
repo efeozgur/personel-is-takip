@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import RatingStars from "@/components/RatingStars";
 
 interface ImageType { id: string; url: string; alt: string | null; order: number; }
 interface Step { id: string; order: number; title: string; description: string | null; images: ImageType[]; }
@@ -14,6 +15,9 @@ interface ProcessDetail {
   author: { id: string; name: string };
   steps: Step[]; tags: { tag: { id: string; name: string } }[];
   createdAt: string;
+  ratingCount: number;
+  ratingAverage: number;
+  myRating: number | null;
 }
 
 export default function IsAkisiDetayPage() {
@@ -26,7 +30,14 @@ export default function IsAkisiDetayPage() {
   const [deleting, setDeleting] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
+  const isAuthor = !!(session && process && session.user.id === process.author.id);
   const canEdit = session && (session.user.role === "ADMIN" || process?.author.id === session.user.id);
+  const canRate = !!(
+    session &&
+    session.user.role !== "PENDING" &&
+    process &&
+    session.user.id !== process.author.id
+  );
 
   useEffect(() => { fetchProcess(); }, []);
 
@@ -47,6 +58,20 @@ export default function IsAkisiDetayPage() {
       if (res.ok) router.push("/is-akislari"); else alert("Silme işlemi başarısız.");
     } catch { alert("Bir hata oluştu."); }
     finally { setDeleting(false); }
+  }
+
+  async function handleRate(score: number) {
+    const res = await fetch(`/api/is-akislari/${params.id}/puanla`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ score }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      alert(data.error || "Puan kaydedilemedi.");
+      return;
+    }
+    fetchProcess();
   }
 
   if (loading) {
@@ -102,6 +127,45 @@ export default function IsAkisiDetayPage() {
                 {deleting ? "Siliniyor..." : "Sil"}
               </button>
             </div>
+          )}
+        </div>
+      </div>
+
+      {/* Topluluk Puanı */}
+      <div className="glass-card p-6 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h3 className="text-sm font-semibold text-zinc-900 mb-1.5">Topluluk Puanı</h3>
+            <RatingStars
+              value={process.ratingAverage}
+              count={process.ratingCount}
+              size="md"
+            />
+          </div>
+          {canRate && (
+            <div className="flex flex-col items-start sm:items-end">
+              <RatingStars
+                interactive
+                value={process.myRating ?? 0}
+                onRate={handleRate}
+                size="md"
+              />
+              <p className="text-xs text-zinc-400 mt-2">
+                {process.myRating
+                  ? `Puanınız: ${process.myRating} ★ (güncellemek için tıklayın)`
+                  : "Puan vermek için tıklayın"}
+              </p>
+            </div>
+          )}
+          {!canRate && !isAuthor && session && (
+            <p className="text-xs text-zinc-400">
+              Puan vermek için ADMIN veya USER rolünde olmalısınız.
+            </p>
+          )}
+          {isAuthor && (
+            <p className="text-xs text-zinc-400">
+              Kendi iş akışınızı puanlayamazsınız.
+            </p>
           )}
         </div>
       </div>

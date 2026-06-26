@@ -9,6 +9,9 @@ export async function GET(
   const { id } = await params;
 
   try {
+    const session = await auth();
+    const myUserId = session?.user?.id;
+
     const process = await prisma.process.findUnique({
       where: { id },
       include: {
@@ -33,7 +36,21 @@ export async function GET(
       );
     }
 
-    return NextResponse.json(process);
+    let myRating: number | null = null;
+    if (myUserId && process.authorId !== myUserId) {
+      const rating = await prisma.rating.findUnique({
+        where: {
+          processId_userId: {
+            processId: id,
+            userId: myUserId,
+          },
+        },
+        select: { score: true },
+      });
+      myRating = rating?.score ?? null;
+    }
+
+    return NextResponse.json({ ...process, myRating });
   } catch (error) {
     console.error("İş akışı getirme hatası:", error);
     return NextResponse.json(
