@@ -1,55 +1,53 @@
+// Prisma şeması - SQLite
+// Not: SQLite Prisma tarafından enum desteklemez, bu yüzden Role String olarak tutuluyor.
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  ADMIN
-  USER
-  PENDING
-}
-
 model User {
-  id        String    @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
-  email     String    @unique
+  email     String   @unique
   password  String
-  role      Role      @default(PENDING)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  role      String   @default("PENDING")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  processes Process[]
-  images    Image[]
+  processes      Process[]
+  images         Image[]
+  passwordResets PasswordReset[]
 }
 
 model Category {
-  id          String    @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
   description String?
   icon        String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  processes   Process[]
+  processes Process[]
 }
 
 model Process {
-  id          String    @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
   description String?
   categoryId  String
   authorId    String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  steps       Step[]
-  tags        ProcessTag[]
+  category Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  author   User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  steps    Step[]
+  tags     ProcessTag[]
 }
 
 model Step {
@@ -59,26 +57,26 @@ model Step {
   title       String
   description String?
 
-  process     Process @relation(fields: [processId], references: [id], onDelete: Cascade)
-  images      Image[]
+  process Process @relation(fields: [processId], references: [id], onDelete: Cascade)
+  images  Image[]
 }
 
 model Image {
-  id        String @id @default(cuid())
-  stepId    String
-  url       String
-  alt       String?
-  order     Int    @default(0)
-  userId    String
+  id    String  @id @default(cuid())
+  stepId String
+  url   String
+  alt   String?
+  order Int     @default(0)
+  userId String
 
-  step      Step   @relation(fields: [stepId], references: [id], onDelete: Cascade)
-  user      User   @relation(fields: [userId], references: [id])
+  step Step @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Tag {
-  id        String      @id @default(cuid())
-  name      String      @unique
-  createdAt DateTime    @default(now())
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
 
   processes ProcessTag[]
 }
@@ -87,8 +85,20 @@ model ProcessTag {
   processId String
   tagId     String
 
-  process   Process @relation(fields: [processId], references: [id], onDelete: Cascade)
-  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  process Process @relation(fields: [processId], references: [id], onDelete: Cascade)
+  tag     Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@id([processId, tagId])
+}
+
+model PasswordReset {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }

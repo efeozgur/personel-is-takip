@@ -101,11 +101,19 @@ export default function GirisPage() {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-zinc-100 text-center">
+          <div className="mt-6 pt-6 border-t border-zinc-100 text-center space-y-2">
             <p className="text-sm text-zinc-600">
               Hesabınız yok mu?{" "}
               <Link href="/kayit" className="text-zinc-900 hover:underline font-medium">
                 Kayıt olun
+              </Link>
+            </p>
+            <p className="text-sm text-zinc-600">
+              <Link
+                href="/sifremi-unuttum"
+                className="text-zinc-900 hover:underline font-medium"
+              >
+                Şifrenizi mi unuttunuz?
               </Link>
             </p>
           </div>

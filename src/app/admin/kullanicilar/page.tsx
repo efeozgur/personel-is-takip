@@ -51,6 +51,30 @@ export default function AdminKullanicilarPage() {
     } catch { alert("Bir hata oluştu."); }
   }
 
+  async function resetPassword(userId: string, userEmail: string) {
+    const newPassword = window.prompt(
+      `${userEmail} için yeni şifre (en az 8 karakter):`
+    );
+    if (!newPassword) return;
+    if (newPassword.length < 8) {
+      alert("Şifre en az 8 karakter olmalıdır.");
+      return;
+    }
+    if (!confirm(`${userEmail} kullanıcısının şifresi değiştirilecek. Devam edilsin mi?`)) return;
+    try {
+      const res = await fetch(`/api/admin/kullanicilar/${userId}/sifre-sifirla`, {
+        method: "PATCH", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newPassword }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert(data.message || "Şifre güncellendi.");
+      } else {
+        alert(data.error || "Şifre sıfırlama başarısız.");
+      }
+    } catch { alert("Bir hata oluştu."); }
+  }
+
   if (!session || session.user.role !== "ADMIN") return null;
 
   if (loading) {
@@ -130,7 +154,16 @@ export default function AdminKullanicilarPage() {
                         <option value="USER">Kullanıcı</option>
                         <option value="ADMIN">Admin</option>
                       </select>
+                      <button
+                        onClick={() => resetPassword(user.id, user.email)}
+                        title="Şifre Sıfırla"
+                        className="p-1.5 text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                        </svg>
+                      </button>
                       <button onClick={() => deleteUser(user.id)}
+                        title="Kullanıcıyı Sil"
                         className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -167,7 +200,16 @@ export default function AdminKullanicilarPage() {
                     <option value="USER">Kullanıcı</option>
                     <option value="ADMIN">Admin</option>
                   </select>
+                  <button
+                    onClick={() => resetPassword(user.id, user.email)}
+                    title="Şifre Sıfırla"
+                    className="p-1.5 text-gray-400 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                    </svg>
+                  </button>
                   <button onClick={() => deleteUser(user.id)}
+                    title="Kullanıcıyı Sil"
                     className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />

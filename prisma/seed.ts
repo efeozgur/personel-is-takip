@@ -1,4 +1,5 @@
-import { PrismaClient, Role } from "@prisma/client";
+// SQLite'ta enum desteklenmediği için Role string olarak tutuluyor
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
