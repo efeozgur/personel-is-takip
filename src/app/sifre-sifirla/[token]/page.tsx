@@ -57,7 +57,7 @@ export default function SifreSifirlaPage({
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50 overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-transparent overflow-hidden">
       <BackgroundBlobs />
       <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
@@ -76,10 +76,10 @@ export default function SifreSifirlaPage({
               />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-zinc-900 tracking-tight">
+          <h2 className="text-xl font-semibold text-navy-950 tracking-tight">
             Yeni Şifre Belirle
           </h2>
-          <p className="text-sm text-zinc-500 mt-1.5">
+          <p className="text-sm text-slate-500 mt-1.5">
             Hesabınız için yeni bir şifre oluşturun.
           </p>
         </div>
@@ -109,7 +109,7 @@ export default function SifreSifirlaPage({
               <div>
                 <label
                   htmlFor="newPassword"
-                  className="block text-sm font-medium text-zinc-900 mb-1.5"
+                  className="block text-sm font-medium text-navy-950 mb-1.5"
                 >
                   Yeni Şifre
                 </label>
@@ -124,7 +124,7 @@ export default function SifreSifirlaPage({
                   placeholder="••••••••"
                   autoFocus
                 />
-                <p className="text-xs text-zinc-500 mt-1">
+                <p className="text-xs text-slate-500 mt-1">
                   En az 8 karakter.
                 </p>
               </div>
@@ -132,7 +132,7 @@ export default function SifreSifirlaPage({
               <div>
                 <label
                   htmlFor="confirm"
-                  className="block text-sm font-medium text-zinc-900 mb-1.5"
+                  className="block text-sm font-medium text-navy-950 mb-1.5"
                 >
                   Yeni Şifre (Tekrar)
                 </label>
@@ -156,10 +156,10 @@ export default function SifreSifirlaPage({
                 {loading ? "Güncelleniyor..." : "Şifreyi Güncelle"}
               </button>
 
-              <div className="pt-4 border-t border-zinc-100 text-center">
+              <div className="pt-4 border-t border-navy-100/70 text-center">
                 <Link
                   href="/giris"
-                  className="text-sm text-indigo-600 hover:text-indigo-700 hover:underline font-medium"
+                  className="text-sm text-orange-600 hover:text-orange-700 hover:underline font-medium"
                 >
                   ← Giriş sayfasına dön
                 </Link>

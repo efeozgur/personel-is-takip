@@ -56,7 +56,7 @@ export default function KayitPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50 overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-transparent overflow-hidden">
       <BackgroundBlobs />
       <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
@@ -65,8 +65,8 @@ export default function KayitPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-zinc-900 tracking-tight">Hesap oluşturun</h2>
-          <p className="text-sm text-zinc-500 mt-1.5">Kayıt olduktan sonra admin onayı gereklidir</p>
+          <h2 className="text-xl font-semibold text-navy-950 tracking-tight">Hesap oluşturun</h2>
+          <p className="text-sm text-slate-500 mt-1.5">Kayıt olduktan sonra admin onayı gereklidir</p>
         </div>
 
         <div className="glass-card p-6">
@@ -83,7 +83,7 @@ export default function KayitPage() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-zinc-900 mb-1.5">Ad Soyad</label>
+              <label className="block text-sm font-medium text-navy-950 mb-1.5">Ad Soyad</label>
               <input
                 type="text"
                 required
@@ -95,7 +95,7 @@ export default function KayitPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-900 mb-1.5">Email</label>
+              <label className="block text-sm font-medium text-navy-950 mb-1.5">Email</label>
               <input
                 type="email"
                 required
@@ -107,7 +107,7 @@ export default function KayitPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-900 mb-1.5">Şifre</label>
+              <label className="block text-sm font-medium text-navy-950 mb-1.5">Şifre</label>
               <input
                 type="password"
                 required
@@ -119,7 +119,7 @@ export default function KayitPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-900 mb-1.5">Şifre Tekrar</label>
+              <label className="block text-sm font-medium text-navy-950 mb-1.5">Şifre Tekrar</label>
               <input
                 type="password"
                 required
@@ -139,10 +139,10 @@ export default function KayitPage() {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-zinc-100 text-center">
-            <p className="text-sm text-zinc-600">
+          <div className="mt-6 pt-6 border-t border-navy-100/70 text-center">
+            <p className="text-sm text-slate-600">
               Zaten hesabınız var mı?{" "}
-              <Link href="/giris" className="text-indigo-600 hover:text-indigo-700 hover:underline font-medium">
+              <Link href="/giris" className="text-orange-600 hover:text-orange-700 hover:underline font-medium">
                 Giriş yapın
               </Link>
             </p>

@@ -1,36 +1,63 @@
 @import "tailwindcss";
 
 @theme {
-  /* Tipografi: ağ bağımlılığı olmayan rafine sistem font yığını
-     (standalone build'de next/font/google ağ sorunu yarattığı için) */
+  /* Kurumsal lacivert + turuncu palet. Tailwind v4 utility'leri
+     navy/orange tokenlarından beslenir. */
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
 
-  /* Renk paletleri: Tailwind v4 varsayılanları (indigo/violet/pink vb.) kullanılır.
-     globals.css'te artık indigo/purple/pink'i zinc'e ezmiyoruz. */
+  --color-navy-50: #eef4fb;
+  --color-navy-100: #d8e8f6;
+  --color-navy-200: #b7d4ee;
+  --color-navy-300: #87b7e1;
+  --color-navy-400: #5595cf;
+  --color-navy-500: #2f78b8;
+  --color-navy-600: #1f5f97;
+  --color-navy-700: #194b78;
+  --color-navy-800: #173f63;
+  --color-navy-900: #0b2341;
+  --color-navy-950: #06162b;
 
-  /* Özel marka aksanı */
-  --color-brand-50: #eef2ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-200: #c7d2fe;
-  --color-brand-300: #a5b4fc;
-  --color-brand-400: #818cf8;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
-  --color-brand-800: #3730a3;
-  --color-brand-900: #312e81;
+  --color-corporate-orange-50: #fff7ed;
+  --color-corporate-orange-100: #ffedd5;
+  --color-corporate-orange-200: #fed7aa;
+  --color-corporate-orange-300: #fdba74;
+  --color-corporate-orange-400: #fb923c;
+  --color-corporate-orange-500: #f97316;
+  --color-corporate-orange-600: #ea580c;
+  --color-corporate-orange-700: #c2410c;
+  --color-corporate-orange-800: #9a3412;
+  --color-corporate-orange-900: #7c2d12;
+
+  --color-brand-50: var(--color-navy-50);
+  --color-brand-100: var(--color-navy-100);
+  --color-brand-200: var(--color-navy-200);
+  --color-brand-300: var(--color-navy-300);
+  --color-brand-400: var(--color-navy-400);
+  --color-brand-500: var(--color-navy-500);
+  --color-brand-600: var(--color-navy-600);
+  --color-brand-700: var(--color-navy-700);
+  --color-brand-800: var(--color-navy-800);
+  --color-brand-900: var(--color-navy-900);
 }
 
 @layer base {
   body {
-    background: #fafafa;
-    color: #18181b;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(249, 115, 22, 0.12), transparent 28rem),
+      linear-gradient(180deg, #f8fafc 0%, #eef4fb 100%);
+    color: #06162b;
     font-family: var(--font-sans);
     letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: "cv11", "ss01", "ss03";
+  }
+
+  ::selection {
+    background: rgba(249, 115, 22, 0.24);
+    color: #06162b;
   }
 
   ::-webkit-scrollbar {
@@ -43,78 +70,77 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #d4d4d8;
+    background: rgba(11, 35, 65, 0.24);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #a1a1aa;
+    background: rgba(11, 35, 65, 0.42);
   }
 }
 
 @layer components {
-  /* ---------- Cards (glassmorphism) ---------- */
   .card {
-    background: #ffffff;
-    border: 1px solid #e4e4e7;
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(25, 75, 120, 0.12);
+    border-radius: 18px;
+    box-shadow: 0 18px 48px rgba(6, 22, 43, 0.06);
     transition: border-color 0.15s ease, box-shadow 0.15s ease,
       transform 0.15s ease;
   }
 
   .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.72);
   }
 
-  /* Cam efektli kart — gradient/mesh arka plan üzerinde Frosted görünüm */
   .glass-card {
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.65);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(79, 70, 229, 0.06);
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(22px) saturate(150%);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    border: 1px solid rgba(25, 75, 120, 0.14);
+    border-radius: 18px;
+    box-shadow: 0 24px 70px rgba(6, 22, 43, 0.12);
     transition: border-color 0.2s ease, box-shadow 0.2s ease,
       transform 0.2s ease;
   }
 
   .card-hover {
-    background: #ffffff;
-    border: 1px solid #e4e4e7;
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(25, 75, 120, 0.12);
+    border-radius: 18px;
+    box-shadow: 0 14px 40px rgba(6, 22, 43, 0.045);
     transition: all 0.2s ease;
   }
 
   .card-hover:hover {
-    border-color: #c7d2fe;
-    box-shadow: 0 12px 32px rgba(79, 70, 229, 0.12);
+    border-color: rgba(249, 115, 22, 0.42);
+    box-shadow: 0 18px 48px rgba(11, 35, 65, 0.14);
     transform: translateY(-2px);
   }
 
   .glass-card-hover {
-    background: rgba(255, 255, 255, 0.72);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.65);
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(79, 70, 229, 0.06);
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(22px) saturate(150%);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    border: 1px solid rgba(25, 75, 120, 0.14);
+    border-radius: 18px;
+    box-shadow: 0 24px 70px rgba(6, 22, 43, 0.1);
     transition: all 0.2s ease;
   }
 
   .glass-card-hover:hover {
-    border-color: rgba(165, 180, 252, 0.8);
-    box-shadow: 0 16px 40px rgba(79, 70, 229, 0.16);
+    border-color: rgba(249, 115, 22, 0.46);
+    box-shadow: 0 20px 58px rgba(11, 35, 65, 0.18);
     transform: translateY(-3px);
   }
 
-  /* ---------- Input ---------- */
   .input,
   .glass-input {
     background: #ffffff;
-    border: 1px solid #e4e4e7;
+    border: 1px solid rgba(25, 75, 120, 0.18);
     border-radius: 12px;
     padding-top: 10px;
     padding-right: 14px;
@@ -122,39 +148,38 @@
     padding-left: 14px;
     font-size: 14px;
     line-height: 20px;
-    color: #18181b;
+    color: #06162b;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
     width: 100%;
   }
 
   .input::placeholder,
   .glass-input::placeholder {
-    color: #a1a1aa;
+    color: #64748b;
   }
 
   .input:hover,
   .glass-input:hover {
-    border-color: #c7d2fe;
+    border-color: rgba(249, 115, 22, 0.48);
   }
 
   .input:focus,
   .glass-input:focus {
     outline: none;
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.18);
   }
 
   .input:disabled,
   .glass-input:disabled {
-    background: #f4f4f5;
+    background: #f1f5f9;
     cursor: not-allowed;
   }
 
-  /* ---------- Buttons ---------- */
   .btn-primary {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #0b2341 0%, #194b78 52%, #f97316 100%);
     color: #ffffff;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
     padding: 10px 18px;
     border-radius: 12px;
@@ -163,12 +188,12 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    border: 1px solid transparent;
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+    border: 1px solid rgba(249, 115, 22, 0.24);
+    box-shadow: 0 8px 22px rgba(11, 35, 65, 0.22);
   }
 
   .btn-primary:hover {
-    box-shadow: 0 8px 22px rgba(99, 102, 241, 0.42);
+    box-shadow: 0 12px 28px rgba(249, 115, 22, 0.28), 0 10px 28px rgba(11, 35, 65, 0.18);
     transform: translateY(-1px);
   }
 
@@ -177,7 +202,7 @@
   }
 
   .btn-primary:disabled {
-    opacity: 0.5;
+    opacity: 0.55;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -185,8 +210,8 @@
 
   .btn-secondary {
     background: #ffffff;
-    color: #18181b;
-    font-weight: 500;
+    color: #0b2341;
+    font-weight: 600;
     font-size: 14px;
     padding: 10px 18px;
     border-radius: 12px;
@@ -195,13 +220,13 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    border: 1px solid #e4e4e7;
+    border: 1px solid rgba(25, 75, 120, 0.18);
   }
 
   .btn-secondary:hover {
-    background: #f5f3ff;
-    border-color: #c7d2fe;
-    color: #4f46e5;
+    background: #fff7ed;
+    border-color: rgba(249, 115, 22, 0.42);
+    color: #c2410c;
   }
 
   .btn-secondary:active {
@@ -232,27 +257,27 @@
     transform: scale(0.98);
   }
 
-  /* ---------- Badges ---------- */
   .badge {
     display: inline-flex;
     align-items: center;
     padding: 2px 8px;
     border-radius: 999px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 18px;
   }
 
-  .badge-indigo {
+  .badge-corporate {
     display: inline-flex;
     align-items: center;
     padding: 2px 8px;
     border-radius: 999px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 18px;
-    background: #eef2ff;
-    color: #4338ca;
+    background: #eef4fb;
+    color: #0b2341;
+    border: 1px solid rgba(25, 75, 120, 0.12);
   }
 
   .badge-green {
@@ -261,7 +286,7 @@
     padding: 2px 8px;
     border-radius: 999px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 18px;
     background: #ecfdf5;
     color: #047857;
@@ -273,22 +298,22 @@
     padding: 2px 8px;
     border-radius: 999px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 18px;
-    background: #fffbeb;
-    color: #b45309;
+    background: #fff7ed;
+    color: #c2410c;
   }
 
-  .badge-purple {
+  .badge-admin {
     display: inline-flex;
     align-items: center;
     padding: 2px 8px;
     border-radius: 999px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 18px;
-    background: #f5f3ff;
-    color: #6d28d9;
+    background: #eef4fb;
+    color: #194b78;
   }
 
   .badge-rose {
@@ -297,13 +322,12 @@
     padding: 2px 8px;
     border-radius: 999px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 18px;
     background: #fff1f2;
     color: #be123c;
   }
 
-  /* ---------- Step indicators ---------- */
   .step-indicator {
     width: 28px;
     height: 28px;
@@ -312,10 +336,10 @@
     align-items: center;
     justify-content: center;
     font-size: 13px;
-    font-weight: 600;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    font-weight: 700;
+    background: linear-gradient(135deg, #0b2341 0%, #f97316 100%);
     color: white;
-    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 6px 18px rgba(11, 35, 65, 0.22);
   }
 
   .step-indicator-inactive {
@@ -327,38 +351,43 @@
     justify-content: center;
     font-size: 13px;
     font-weight: 500;
-    background: #f4f4f5;
-    color: #71717a;
+    background: #eef4fb;
+    color: #194b78;
   }
 
-  /* ---------- File input ---------- */
   .file-input {
     display: block;
     width: 100%;
     font-size: 14px;
-    color: #71717a;
+    color: #475569;
   }
 
   .file-input::file-selector-button {
     margin-right: 12px;
     padding: 8px 14px;
     border-radius: 10px;
-    border: 1px solid #e4e4e7;
+    border: 1px solid rgba(25, 75, 120, 0.18);
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     background: #ffffff;
-    color: #18181b;
+    color: #0b2341;
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .file-input::file-selector-button:hover {
-    background: #f5f3ff;
-    border-color: #c7d2fe;
-    color: #4f46e5;
+    background: #fff7ed;
+    border-color: rgba(249, 115, 22, 0.42);
+    color: #c2410c;
   }
 
-  /* ---------- Line clamp ---------- */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -366,18 +395,16 @@
     overflow: hidden;
   }
 
-  /* ---------- Gradient text ---------- */
   .gradient-text {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+    background: linear-gradient(135deg, #0b2341 0%, #194b78 46%, #f97316 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* ---------- Gradient kutu (logo / ikon) ---------- */
   .gradient-box {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+    background: linear-gradient(135deg, #0b2341 0%, #194b78 52%, #f97316 100%);
+    box-shadow: 0 10px 28px rgba(11, 35, 65, 0.25);
   }
 }
 

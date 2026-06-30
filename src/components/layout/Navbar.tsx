@@ -26,7 +26,7 @@ export function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-zinc-200">
+    <nav className="sticky top-0 z-50 bg-navy-950/95 backdrop-blur-md border-b border-orange-500/20 shadow-lg shadow-navy-950/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center gap-8">
@@ -36,7 +36,7 @@ export function Navbar() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <span className="text-base font-semibold text-zinc-900 hidden sm:block tracking-tight">
+              <span className="text-base font-semibold text-white hidden sm:block tracking-tight">
                 Personel İş Akışı
               </span>
             </Link>
@@ -49,8 +49,8 @@ export function Navbar() {
                     href={link.href}
                     className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                       isActive(link.href)
-                        ? "bg-indigo-50 text-indigo-700"
-                        : "text-zinc-600 hover:text-indigo-700 hover:bg-indigo-50/60"
+                        ? "bg-orange-500 text-white shadow-sm shadow-orange-500/20"
+                        : "text-navy-100 hover:text-white hover:bg-white/10"
                     }`}
                   >
                     {link.label}
@@ -62,8 +62,8 @@ export function Navbar() {
                       href="/admin/kategoriler"
                       className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                         isActive("/admin/kategoriler")
-                          ? "bg-indigo-50 text-indigo-700"
-                          : "text-zinc-600 hover:text-indigo-700 hover:bg-indigo-50/60"
+                          ? "bg-orange-500 text-white shadow-sm shadow-orange-500/20"
+                          : "text-navy-100 hover:text-white hover:bg-white/10"
                       }`}
                     >
                       Kategoriler
@@ -72,8 +72,8 @@ export function Navbar() {
                       href="/admin/kullanicilar"
                       className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                         isActive("/admin/kullanicilar")
-                          ? "bg-indigo-50 text-indigo-700"
-                          : "text-zinc-600 hover:text-indigo-700 hover:bg-indigo-50/60"
+                          ? "bg-orange-500 text-white shadow-sm shadow-orange-500/20"
+                          : "text-navy-100 hover:text-white hover:bg-white/10"
                       }`}
                     >
                       Kullanıcılar
@@ -92,14 +92,14 @@ export function Navbar() {
                     {session.user.name?.charAt(0).toUpperCase()}
                   </div>
                   <div className="text-sm leading-tight">
-                    <p className="text-zinc-900 font-medium">
+                    <p className="text-white font-medium">
                       {session.user.name}
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => signOut({ callbackUrl: "/giris" })}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-navy-100 hover:text-white hover:bg-white/10 transition-colors"
                 >
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -115,7 +115,7 @@ export function Navbar() {
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 rounded-lg text-zinc-600 hover:bg-zinc-100"
+              className="md:hidden p-2 rounded-lg text-navy-100 hover:text-white hover:bg-white/10"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {mobileOpen ? (
@@ -129,7 +129,7 @@ export function Navbar() {
         </div>
 
         {mobileOpen && session && (
-          <div className="md:hidden pb-3 pt-2 border-t border-zinc-200 space-y-1">
+          <div className="md:hidden pb-3 pt-2 border-t border-white/10 space-y-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -137,8 +137,8 @@ export function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className={`block px-3 py-2 rounded-lg text-sm font-medium ${
                   isActive(link.href)
-                    ? "bg-indigo-50 text-indigo-700"
-                    : "text-zinc-600 hover:bg-indigo-50/60"
+                    ? "bg-orange-500 text-white"
+                    : "text-navy-100 hover:text-white hover:bg-white/10"
                 }`}
               >
                 {link.label}
@@ -151,8 +151,8 @@ export function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className={`block px-3 py-2 rounded-lg text-sm font-medium ${
                     isActive("/admin/kategoriler")
-                      ? "bg-indigo-50 text-indigo-700"
-                      : "text-zinc-600 hover:bg-indigo-50/60"
+                      ? "bg-orange-500 text-white"
+                      : "text-navy-100 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   Kategoriler
@@ -162,8 +162,8 @@ export function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className={`block px-3 py-2 rounded-lg text-sm font-medium ${
                     isActive("/admin/kullanicilar")
-                      ? "bg-indigo-50 text-indigo-700"
-                      : "text-zinc-600 hover:bg-indigo-50/60"
+                      ? "bg-orange-500 text-white"
+                      : "text-navy-100 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   Kullanıcılar

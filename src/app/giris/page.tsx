@@ -43,7 +43,7 @@ export default function GirisPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50 overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-transparent overflow-hidden">
       <BackgroundBlobs />
       <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
@@ -52,8 +52,8 @@ export default function GirisPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-zinc-900 tracking-tight">Hesabınıza giriş yapın</h2>
-          <p className="text-sm text-zinc-500 mt-1.5">Personel İş Akışı platformuna hoş geldiniz</p>
+          <h2 className="text-xl font-semibold text-navy-950 tracking-tight">Hesabınıza giriş yapın</h2>
+          <p className="text-sm text-slate-500 mt-1.5">Personel İş Akışı platformuna hoş geldiniz</p>
         </div>
 
         <div className="glass-card p-6">
@@ -65,7 +65,7 @@ export default function GirisPage() {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-zinc-900 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-medium text-navy-950 mb-1.5">
                 Email
               </label>
               <input
@@ -80,7 +80,7 @@ export default function GirisPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-zinc-900 mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-navy-950 mb-1.5">
                 Şifre
               </label>
               <input
@@ -103,17 +103,17 @@ export default function GirisPage() {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-zinc-100 text-center space-y-2">
-            <p className="text-sm text-zinc-600">
+          <div className="mt-6 pt-6 border-t border-navy-100/70 text-center space-y-2">
+            <p className="text-sm text-slate-600">
               Hesabınız yok mu?{" "}
-              <Link href="/kayit" className="text-indigo-600 hover:text-indigo-700 hover:underline font-medium">
+              <Link href="/kayit" className="text-orange-600 hover:text-orange-700 hover:underline font-medium">
                 Kayıt olun
               </Link>
             </p>
-            <p className="text-sm text-zinc-600">
+            <p className="text-sm text-slate-600">
               <Link
                 href="/sifremi-unuttum"
-                className="text-indigo-600 hover:text-indigo-700 hover:underline font-medium"
+                className="text-orange-600 hover:text-orange-700 hover:underline font-medium"
               >
                 Şifrenizi mi unuttunuz?
               </Link>

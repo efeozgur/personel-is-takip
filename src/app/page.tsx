@@ -86,10 +86,10 @@ export default function HomePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-zinc-900 mb-5">
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-navy-950 mb-5">
               Personel <span className="gradient-text">İş Akışı</span>
             </h1>
-            <p className="text-lg text-zinc-600 mb-10 leading-relaxed max-w-xl mx-auto">
+            <p className="text-lg text-slate-600 mb-10 leading-relaxed max-w-xl mx-auto">
               İş akışlarını adım adım öğrenin, bilgi paylaşımında bulunun
               ve kurumunuzdaki süreçleri daha verimli hale getirin.
             </p>
@@ -105,18 +105,18 @@ export default function HomePage() {
           <div className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
             <div className="glass-card p-6 text-center">
               <div className="text-2xl mb-3">📋</div>
-              <p className="text-sm font-medium text-zinc-900">Adım Adım Rehberler</p>
-              <p className="text-xs text-zinc-500 mt-1">Detaylı yönergeler</p>
+              <p className="text-sm font-medium text-navy-950">Adım Adım Rehberler</p>
+              <p className="text-xs text-slate-500 mt-1">Detaylı yönergeler</p>
             </div>
             <div className="glass-card p-6 text-center">
               <div className="text-2xl mb-3">🖼️</div>
-              <p className="text-sm font-medium text-zinc-900">Görsel Anlatım</p>
-              <p className="text-xs text-zinc-500 mt-1">Ekran görüntüleri ile</p>
+              <p className="text-sm font-medium text-navy-950">Görsel Anlatım</p>
+              <p className="text-xs text-slate-500 mt-1">Ekran görüntüleri ile</p>
             </div>
             <div className="glass-card p-6 text-center">
               <div className="text-2xl mb-3">🔍</div>
-              <p className="text-sm font-medium text-zinc-900">Kolay Arama</p>
-              <p className="text-xs text-zinc-500 mt-1">Hızlı erişim</p>
+              <p className="text-sm font-medium text-navy-950">Kolay Arama</p>
+              <p className="text-xs text-slate-500 mt-1">Hızlı erişim</p>
             </div>
           </div>
         </div>
@@ -137,10 +137,10 @@ export default function HomePage() {
       {/* Welcome */}
       <div className="flex items-center justify-between mb-10">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900 tracking-tight">
+          <h1 className="text-2xl font-semibold text-navy-950 tracking-tight">
             Hoş Geldiniz, <span className="gradient-text">{session.user.name}</span>
           </h1>
-          <p className="text-sm text-zinc-500 mt-1">
+          <p className="text-sm text-slate-500 mt-1">
             İş akışlarını keşfedin ve bilgi paylaşımında bulunun
           </p>
         </div>
@@ -156,7 +156,7 @@ export default function HomePage() {
       <form onSubmit={handleSearch} className="mb-12">
         <div className="relative max-w-2xl">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <svg className="w-5 h-5 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
@@ -177,7 +177,7 @@ export default function HomePage() {
       {categories.length > 0 && (
         <div className="mb-14">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-base font-semibold text-zinc-900">Kategoriler</h2>
+            <h2 className="text-base font-semibold text-navy-950">Kategoriler</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {categories.map((category) => (
@@ -186,13 +186,13 @@ export default function HomePage() {
                 href={`/is-akislari?kategori=${category.id}`}
                 className="card-hover p-5 text-left"
               >
-                <div className="w-10 h-10 mb-3 rounded-xl bg-indigo-50 flex items-center justify-center text-xl">
+                <div className="w-10 h-10 mb-3 rounded-xl bg-navy-50 flex items-center justify-center text-xl">
                   {category.icon || categoryIcons[category.name] || "📁"}
                 </div>
-                <h3 className="font-medium text-zinc-900 text-sm mb-0.5">
+                <h3 className="font-medium text-navy-950 text-sm mb-0.5">
                   {category.name}
                 </h3>
-                <p className="text-xs text-zinc-500">
+                <p className="text-xs text-slate-500">
                   {category._count.processes} iş akışı
                 </p>
               </Link>
@@ -204,10 +204,10 @@ export default function HomePage() {
       {/* Son Eklenen İş Akışları */}
       <div>
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-base font-semibold text-zinc-900">Son Eklenen</h2>
+          <h2 className="text-base font-semibold text-navy-950">Son Eklenen</h2>
           <Link
             href="/is-akislari"
-            className="text-sm font-medium text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
+            className="text-sm font-medium text-orange-600 hover:text-orange-700 inline-flex items-center gap-1"
           >
             Tümünü Gör
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -240,7 +240,7 @@ export default function HomePage() {
                   className="card-hover group block overflow-hidden"
                 >
                   {thumb ? (
-                    <div className="relative h-32 w-full overflow-hidden bg-zinc-100">
+                    <div className="relative h-32 w-full overflow-hidden bg-navy-100">
                       <Image
                         src={thumb}
                         alt={process.title}
@@ -250,47 +250,47 @@ export default function HomePage() {
                       />
                     </div>
                   ) : (
-                    <div className="h-32 w-full bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 flex items-center justify-center text-4xl">
+                    <div className="h-32 w-full bg-gradient-to-br from-navy-950 via-navy-700 to-orange-500 flex items-center justify-center text-4xl">
                       {process.category.icon || categoryIcons[process.category.name] || "📁"}
                     </div>
                   )}
                   <div className="p-5">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="badge-indigo">
+                      <span className="badge-corporate">
                         {process.category.name}
                       </span>
-                      <span className="text-xs text-zinc-500">
+                      <span className="text-xs text-slate-500">
                         {process._count.steps} adım
                       </span>
                     </div>
-                    <h3 className="font-medium text-zinc-900 mb-1.5 group-hover:text-indigo-600 transition-colors line-clamp-2 leading-snug">
+                    <h3 className="font-medium text-navy-950 mb-1.5 group-hover:text-orange-600 transition-colors line-clamp-2 leading-snug">
                       {process.title}
                     </h3>
                     {process.description && (
-                      <p className="text-sm text-zinc-500 mb-4 line-clamp-2">
+                      <p className="text-sm text-slate-500 mb-4 line-clamp-2">
                         {process.description}
                       </p>
                     )}
                     {process.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-4">
                         {process.tags.slice(0, 2).map((pt) => (
-                          <span key={pt.tag.id} className="text-xs text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md">
+                          <span key={pt.tag.id} className="text-xs text-orange-700 bg-orange-50 border border-orange-200/70 px-2 py-0.5 rounded-md">
                             #{pt.tag.name}
                           </span>
                         ))}
                         {process.tags.length > 2 && (
-                          <span className="text-xs text-zinc-400">+{process.tags.length - 2}</span>
+                          <span className="text-xs text-slate-400">+{process.tags.length - 2}</span>
                         )}
                       </div>
                     )}
-                    <div className="flex items-center justify-between pt-3 border-t border-zinc-100">
+                    <div className="flex items-center justify-between pt-3 border-t border-navy-100/70">
                       <div className="flex items-center gap-2">
                         <div className="w-6 h-6 rounded-full gradient-box flex items-center justify-center text-white text-[10px] font-medium">
                           {process.author.name.charAt(0)}
                         </div>
-                        <span className="text-xs text-zinc-600">{process.author.name}</span>
+                        <span className="text-xs text-slate-600">{process.author.name}</span>
                       </div>
-                      <span className="text-xs text-zinc-400">
+                      <span className="text-xs text-slate-400">
                         {new Date(process.createdAt).toLocaleDateString("tr-TR")}
                       </span>
                     </div>
