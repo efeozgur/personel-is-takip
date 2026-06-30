@@ -100,7 +100,7 @@ export default function AdminKategorilerPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold text-navy-950 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-white flex items-center gap-2">
           <span className="w-9 h-9 rounded-xl gradient-box flex items-center justify-center">
             <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -122,13 +122,13 @@ export default function AdminKategorilerPage() {
       {/* Ekleme / Düzenleme Formu */}
       {isAdding && (
         <div className="card p-6 mb-8">
-          <h2 className="text-lg font-semibold text-navy-950 mb-4">
+          <h2 className="text-lg font-semibold text-white mb-4">
             {editingId ? "Kategori Düzenle" : "Yeni Kategori"}
           </h2>
           <form onSubmit={handleSave} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">İkon (emoji)</label>
+                <label className="block text-sm font-medium text-slate-200 mb-1.5">İkon (emoji)</label>
                 <input
                   type="text"
                   value={form.icon}
@@ -139,7 +139,7 @@ export default function AdminKategorilerPage() {
                 />
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-sm font-medium text-slate-700 mb-1.5">Kategori Adı *</label>
+                <label className="block text-sm font-medium text-slate-200 mb-1.5">Kategori Adı *</label>
                 <input
                   type="text"
                   value={form.name}
@@ -151,7 +151,7 @@ export default function AdminKategorilerPage() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">Açıklama</label>
+              <label className="block text-sm font-medium text-slate-200 mb-1.5">Açıklama</label>
               <input
                 type="text"
                 value={form.description}
@@ -177,33 +177,33 @@ export default function AdminKategorilerPage() {
         <div className="hidden md:block">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-navy-100/70">
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">İkon</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Kategori</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Açıklama</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">İş Akışı</th>
-                <th className="px-6 py-4 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider">İşlem</th>
+              <tr className="border-b border-white/10">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">İkon</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Kategori</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Açıklama</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">İş Akışı</th>
+                <th className="px-6 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">İşlem</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-navy-50">
+            <tbody className="divide-y divide-white/10">
               {categories.map((cat) => (
-                <tr key={cat.id} className="hover:bg-orange-50/60 transition-colors">
+                <tr key={cat.id} className="hover:bg-orange-500/10 transition-colors">
                   <td className="px-6 py-4 text-2xl">{cat.icon || "📁"}</td>
                   <td className="px-6 py-4">
-                    <span className="text-sm font-medium text-navy-950">{cat.name}</span>
+                    <span className="text-sm font-medium text-white">{cat.name}</span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-slate-500">{cat.description || "-"}</td>
+                  <td className="px-6 py-4 text-sm text-slate-400">{cat.description || "-"}</td>
                   <td className="px-6 py-4">
                     <span className="badge-corporate text-[11px]">{cat._count.processes} adet</span>
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <button onClick={() => startEdit(cat)} className="p-1.5 text-slate-400 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors">
+                      <button onClick={() => startEdit(cat)} className="p-1.5 text-slate-500 hover:text-orange-300 hover:bg-orange-500/10 rounded-lg transition-colors">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
                       </button>
-                      <button onClick={() => handleDelete(cat.id)} className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
+                      <button onClick={() => handleDelete(cat.id)} className="p-1.5 text-slate-500 hover:text-rose-300 hover:bg-rose-500/10 rounded-lg transition-colors">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
@@ -217,21 +217,21 @@ export default function AdminKategorilerPage() {
         </div>
 
         {/* Mobile */}
-        <div className="md:hidden divide-y divide-navy-50">
+        <div className="md:hidden divide-y divide-white/10">
           {categories.map((cat) => (
             <div key={cat.id} className="p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-2xl">{cat.icon || "📁"}</span>
                 <div>
-                  <p className="text-sm font-medium text-navy-950">{cat.name}</p>
-                  <p className="text-xs text-slate-400">{cat._count.processes} iş akışı</p>
+                  <p className="text-sm font-medium text-white">{cat.name}</p>
+                  <p className="text-xs text-slate-500">{cat._count.processes} iş akışı</p>
                 </div>
               </div>
               <div className="flex gap-1">
-                <button onClick={() => startEdit(cat)} className="p-2 text-slate-400 hover:text-orange-600 rounded-lg">
+                <button onClick={() => startEdit(cat)} className="p-2 text-slate-500 hover:text-orange-300 rounded-lg">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                 </button>
-                <button onClick={() => handleDelete(cat.id)} className="p-2 text-slate-400 hover:text-rose-600 rounded-lg">
+                <button onClick={() => handleDelete(cat.id)} className="p-2 text-slate-500 hover:text-rose-600 rounded-lg">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                 </button>
               </div>

@@ -262,7 +262,7 @@ export default function DuzenlePage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-bold text-navy-950 mb-8 flex items-center gap-2">
+      <h1 className="text-2xl font-bold text-white mb-8 flex items-center gap-2">
         <span className="w-9 h-9 rounded-xl gradient-box flex items-center justify-center">
           <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -273,7 +273,7 @@ export default function DuzenlePage() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="border border-rose-200 bg-rose-50 p-4 text-rose-700 text-sm rounded-xl flex items-start gap-3">
+          <div className="border border-rose-400/30 bg-rose-500/10 p-4 text-rose-200 text-sm rounded-xl flex items-start gap-3">
             <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -283,23 +283,23 @@ export default function DuzenlePage() {
 
         {/* Temel Bilgiler */}
         <div className="card p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-navy-950 flex items-center gap-2">
-            <span className="w-7 h-7 rounded-lg bg-orange-100 flex items-center justify-center text-xs text-orange-600 font-semibold">1</span>
+          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+            <span className="w-7 h-7 rounded-lg bg-orange-500/15 flex items-center justify-center text-xs text-orange-300 font-semibold">1</span>
             Temel Bilgiler
           </h2>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5">Başlık *</label>
+            <label className="block text-sm font-medium text-slate-200 mb-1.5">Başlık *</label>
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="input w-full" required />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5">Açıklama</label>
+            <label className="block text-sm font-medium text-slate-200 mb-1.5">Açıklama</label>
             <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} className="input w-full" />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5">Kategori *</label>
+            <label className="block text-sm font-medium text-slate-200 mb-1.5">Kategori *</label>
             <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className="input w-full" required>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -308,12 +308,12 @@ export default function DuzenlePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1.5">Etiketler</label>
+            <label className="block text-sm font-medium text-slate-200 mb-1.5">Etiketler</label>
             <div className="flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <button key={tag.id} type="button" onClick={() => setSelectedTags((prev) => prev.includes(tag.id) ? prev.filter((t) => t !== tag.id) : [...prev, tag.id])}
                   className={`text-sm px-3 py-1.5 rounded-full border transition-all duration-200 ${
-                    selectedTags.includes(tag.id) ? "bg-orange-50 border-orange-300 text-orange-700" : "bg-white border-navy-100 text-slate-600 hover:border-orange-300"
+                    selectedTags.includes(tag.id) ? "bg-orange-500/10 border-orange-400/50 text-orange-300" : "bg-white/5 border-white/10 text-slate-300 hover:border-orange-400/60"
                   }`}>
                   #{tag.name}
                 </button>
@@ -325,8 +325,8 @@ export default function DuzenlePage() {
         {/* Adımlar */}
         <div className="card p-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-navy-950 flex items-center gap-2">
-              <span className="w-7 h-7 rounded-lg bg-orange-100 flex items-center justify-center text-xs text-orange-700 font-semibold">2</span>
+            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+              <span className="w-7 h-7 rounded-lg bg-orange-500/15 flex items-center justify-center text-xs text-orange-300 font-semibold">2</span>
               Adımlar ({steps.filter(s => !s.toDelete).length})
             </h2>
             <button type="button" onClick={addStep} className="btn-secondary text-sm py-1.5 px-3 flex items-center gap-1">
@@ -341,17 +341,17 @@ export default function DuzenlePage() {
               <div
                 key={index}
                 className={`border rounded-xl p-5 transition-all ${
-                  step.isNew ? "border-emerald-300 bg-emerald-50" : "border-navy-100 bg-white"
+                  step.isNew ? "border-emerald-400/40 bg-emerald-500/10" : "border-white/10 bg-white/5"
                 }`}
                 onPaste={(e) => handlePaste(e, index)}
               >
                 <div className="flex justify-between items-center mb-3">
-                  <h3 className="font-medium text-navy-950 flex items-center gap-2">
+                  <h3 className="font-medium text-white flex items-center gap-2">
                     <span className="step-indicator text-xs">{step.order}</span>
                     Adım {step.order}
-                    {step.isNew && <span className="text-xs text-emerald-600 font-normal ml-1">(Yeni)</span>}
+                    {step.isNew && <span className="text-xs text-emerald-300 font-normal ml-1">(Yeni)</span>}
                   </h3>
-                  <button type="button" onClick={() => removeStep(index)} className="text-sm text-rose-500 hover:text-rose-700 flex items-center gap-1">
+                  <button type="button" onClick={() => removeStep(index)} className="text-sm text-rose-500 hover:text-rose-300 flex items-center gap-1">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                     Kaldır
                   </button>
@@ -361,8 +361,8 @@ export default function DuzenlePage() {
                   <textarea value={step.description} onChange={(e) => updateStep(index, "description", e.target.value)} rows={3} className="input w-full" placeholder="Bu adımda ne yapılmalı? Detaylı açıklama, ipuçları..." required />
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Ekran Görüntüleri</label>
-                    <p className="text-xs text-slate-400 mb-2">Dosya seçebilir veya Ctrl+V ile resim yapıştırabilirsiniz</p>
+                    <label className="block text-sm font-medium text-slate-200 mb-1.5">Ekran Görüntüleri</label>
+                    <p className="text-xs text-slate-500 mb-2">Dosya seçebilir veya Ctrl+V ile resim yapıştırabilirsiniz</p>
                     <input type="file" accept="image/*" multiple onChange={(e) => {
                       const files = Array.from(e.target.files || []);
                       if (files.length > 0) updateStep(index, "images", files);
@@ -375,7 +375,7 @@ export default function DuzenlePage() {
                           <div
                             key={imgIndex}
                             className={`relative group rounded-lg overflow-hidden border cursor-zoom-in shadow-sm ${
-                              img.isNew ? "border-emerald-300" : "border-navy-100"
+                              img.isNew ? "border-emerald-400/40" : "border-white/10"
                             }`}
                             onClick={() => setLightboxImage(img.preview || img.url)}
                           >

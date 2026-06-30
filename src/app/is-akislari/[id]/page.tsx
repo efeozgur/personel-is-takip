@@ -101,7 +101,7 @@ export default function IsAkisiDetayPage() {
       <div className="card p-6 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="flex-1">
-            <div className="flex items-center gap-2 text-sm text-slate-400 mb-2">
+            <div className="flex items-center gap-2 text-sm text-slate-500 mb-2">
               <span className="badge-corporate text-[11px]">{process.category.icon || "📁"} {process.category.name}</span>
               <span>•</span>
               <span className="flex items-center gap-1">
@@ -111,11 +111,11 @@ export default function IsAkisiDetayPage() {
               <span>•</span>
               <span>{new Date(process.createdAt).toLocaleDateString("tr-TR")}</span>
             </div>
-            <h1 className="text-2xl font-bold text-navy-950">{process.title}</h1>
-            {process.description && <p className="mt-2 text-slate-500">{process.description}</p>}
+            <h1 className="text-2xl font-bold text-white">{process.title}</h1>
+            {process.description && <p className="mt-2 text-slate-400">{process.description}</p>}
             <div className="flex flex-wrap gap-1.5 mt-3">
               {process.tags.map((pt) => (
-                <span key={pt.tag.id} className="badge bg-orange-50 text-orange-700 border border-orange-200/70 text-[10px]">#{pt.tag.name}</span>
+                <span key={pt.tag.id} className="badge bg-orange-500/10 text-orange-300 border border-orange-400/30 text-[10px]">#{pt.tag.name}</span>
               ))}
             </div>
           </div>
@@ -139,7 +139,7 @@ export default function IsAkisiDetayPage() {
       <div className="card p-6 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h3 className="text-sm font-semibold text-navy-950 mb-1.5">Topluluk Puanı</h3>
+            <h3 className="text-sm font-semibold text-white mb-1.5">Topluluk Puanı</h3>
             <RatingStars
               value={process.ratingAverage}
               count={process.ratingCount}
@@ -154,7 +154,7 @@ export default function IsAkisiDetayPage() {
                 onRate={handleRate}
                 size="md"
               />
-              <p className="text-xs text-slate-400 mt-2">
+              <p className="text-xs text-slate-500 mt-2">
                 {process.myRating
                   ? `Puanınız: ${process.myRating} ★ (güncellemek için tıklayın)`
                   : "Puan vermek için tıklayın"}
@@ -162,12 +162,12 @@ export default function IsAkisiDetayPage() {
             </div>
           )}
           {!canRate && !isAuthor && session && (
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               Puan vermek için ADMIN veya USER rolünde olmalısınız.
             </p>
           )}
           {isAuthor && (
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               Kendi iş akışınızı puanlayamazsınız.
             </p>
           )}
@@ -179,18 +179,18 @@ export default function IsAkisiDetayPage() {
         {/* Sidebar - Adım İlerleme Çizelgesi */}
         <div className="lg:w-64 flex-shrink-0">
           <div className="card p-4 sticky top-20">
-            <h3 className="font-semibold text-navy-950 mb-3 text-sm flex items-center gap-2">
-              <svg className="w-4 h-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
+            <h3 className="font-semibold text-white mb-3 text-sm flex items-center gap-2">
+              <svg className="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
               Adımlar
             </h3>
 
             {totalSteps > 0 && (
               <div className="mb-4">
-                <div className="flex justify-between text-xs text-slate-500 mb-1.5">
+                <div className="flex justify-between text-xs text-slate-400 mb-1.5">
                   <span>İlerleme</span>
                   <span className="tabular-nums">{activeStep + 1}/{totalSteps}</span>
                 </div>
-                <div className="h-1.5 bg-navy-100 rounded-full overflow-hidden">
+                <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-navy-800 to-orange-500 rounded-full transition-all duration-300"
                     style={{ width: `${progress}%` }}
@@ -209,10 +209,10 @@ export default function IsAkisiDetayPage() {
                     onClick={() => setActiveStep(index)}
                     className={`w-full text-left flex items-center gap-3 px-2.5 py-2 rounded-lg text-sm transition-all duration-200 ${
                       isActive
-                        ? "bg-navy-50 text-navy-800 font-medium"
+                        ? "bg-white/5 text-orange-200 font-medium"
                         : isCompleted
-                        ? "text-slate-600 hover:bg-navy-50"
-                        : "text-slate-400 hover:bg-navy-50"
+                        ? "text-slate-300 hover:bg-white/10"
+                        : "text-slate-500 hover:bg-white/10"
                     }`}
                   >
                     <span
@@ -221,7 +221,7 @@ export default function IsAkisiDetayPage() {
                           ? "bg-gradient-to-br from-navy-950 to-orange-500 text-white shadow-sm"
                           : isCompleted
                           ? "bg-emerald-500 text-white"
-                          : "bg-navy-100 text-slate-400"
+                          : "bg-white/10 text-slate-500"
                       }`}
                     >
                       {isCompleted ? (
@@ -247,7 +247,7 @@ export default function IsAkisiDetayPage() {
           ) : (
             <div key={activeStep} className="card p-6 animate-fade-in-up">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-navy-950 flex items-center gap-2">
+                <h2 className="text-xl font-semibold text-white flex items-center gap-2">
                   <span className="step-indicator">{process.steps[activeStep].order}</span>
                   {process.steps[activeStep].title}
                 </h2>
@@ -276,11 +276,11 @@ export default function IsAkisiDetayPage() {
                   {process.steps[activeStep].images.sort((a, b) => a.order - b.order).map((image) => (
                     <div
                       key={image.id}
-                      className="rounded-xl overflow-hidden border border-navy-100 shadow-sm cursor-zoom-in hover:shadow-md transition-shadow"
+                      className="rounded-xl overflow-hidden border border-white/10 shadow-sm cursor-zoom-in hover:shadow-md transition-shadow"
                       onClick={() => setLightboxImage(image.url)}
                     >
                       <Image src={image.url} alt={image.alt || "Ekran görüntüsü"} width={800} height={600} className="w-full h-auto object-contain" />
-                      {image.alt && <p className="text-xs text-slate-500 px-4 py-2 bg-navy-50">{image.alt}</p>}
+                      {image.alt && <p className="text-xs text-slate-400 px-4 py-2 bg-white/5">{image.alt}</p>}
                     </div>
                   ))}
                 </div>
@@ -332,7 +332,7 @@ function DescriptionWithTags({ text }: { text: string }) {
   if (lastIndex < text.length) parts.push(text.substring(lastIndex));
 
   return (
-    <div className="text-slate-700 mb-6 whitespace-pre-wrap bg-navy-50 rounded-xl p-4 leading-relaxed border border-navy-100/70">
+    <div className="text-slate-200 mb-6 whitespace-pre-wrap bg-white/5 rounded-xl p-4 leading-relaxed border border-white/10">
       {parts.map((p, i) =>
         typeof p === "string" ? (
           <span key={i}>{p}</span>
@@ -340,7 +340,7 @@ function DescriptionWithTags({ text }: { text: string }) {
           <Link
             key={i}
             href={`/is-akislari?tagId=&search=%23${encodeURIComponent(p.tag)}`}
-            className="text-orange-600 hover:text-orange-700 font-medium hover:underline transition-colors"
+            className="text-orange-300 hover:text-orange-300 font-medium hover:underline transition-colors"
           >
             #{p.tag}
           </Link>

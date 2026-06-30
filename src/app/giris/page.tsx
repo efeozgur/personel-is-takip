@@ -52,20 +52,20 @@ export default function GirisPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-navy-950 tracking-tight">Hesabınıza giriş yapın</h2>
-          <p className="text-sm text-slate-500 mt-1.5">Personel İş Akışı platformuna hoş geldiniz</p>
+          <h2 className="text-xl font-semibold text-white tracking-tight">Hesabınıza giriş yapın</h2>
+          <p className="text-sm text-slate-400 mt-1.5">Personel İş Akışı platformuna hoş geldiniz</p>
         </div>
 
         <div className="glass-card p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="bg-rose-50 border border-rose-200 text-rose-700 px-3.5 py-2.5 rounded-lg text-sm">
+              <div className="bg-rose-500/10 border border-rose-400/30 text-rose-200 px-3.5 py-2.5 rounded-lg text-sm">
                 {error}
               </div>
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-navy-950 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-medium text-white mb-1.5">
                 Email
               </label>
               <input
@@ -80,7 +80,7 @@ export default function GirisPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-navy-950 mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-white mb-1.5">
                 Şifre
               </label>
               <input
@@ -103,17 +103,17 @@ export default function GirisPage() {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-navy-100/70 text-center space-y-2">
-            <p className="text-sm text-slate-600">
+          <div className="mt-6 pt-6 border-t border-white/10 text-center space-y-2">
+            <p className="text-sm text-slate-300">
               Hesabınız yok mu?{" "}
-              <Link href="/kayit" className="text-orange-600 hover:text-orange-700 hover:underline font-medium">
+              <Link href="/kayit" className="text-orange-300 hover:text-orange-300 hover:underline font-medium">
                 Kayıt olun
               </Link>
             </p>
-            <p className="text-sm text-slate-600">
+            <p className="text-sm text-slate-300">
               <Link
                 href="/sifremi-unuttum"
-                className="text-orange-600 hover:text-orange-700 hover:underline font-medium"
+                className="text-orange-300 hover:text-orange-300 hover:underline font-medium"
               >
                 Şifrenizi mi unuttunuz?
               </Link>
