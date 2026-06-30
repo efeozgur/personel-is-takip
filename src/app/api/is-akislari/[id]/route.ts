@@ -93,7 +93,7 @@ export async function PATCH(
     const { title, description, categoryId, tags } = await request.json();
 
     // Tag adlarından ID çözümle (yoksa oluştur)
-    let tagIds: string[] = [];
+    const tagIds: string[] = [];
     if (tags?.length) {
       for (const t of tags) {
         const name = (typeof t === "string" ? t : "").trim().toLowerCase().replace(/^#/, "");

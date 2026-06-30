@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import BackgroundBlobs from "@/components/ui/BackgroundBlobs";
 
 export default function GirisPage() {
   const router = useRouter();
@@ -42,10 +43,11 @@ export default function GirisPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50">
-      <div className="w-full max-w-sm">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50 overflow-hidden">
+      <BackgroundBlobs />
+      <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 mx-auto mb-5 rounded-xl bg-zinc-900 flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto mb-5 rounded-xl gradient-box flex items-center justify-center">
             <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -54,7 +56,7 @@ export default function GirisPage() {
           <p className="text-sm text-zinc-500 mt-1.5">Personel İş Akışı platformuna hoş geldiniz</p>
         </div>
 
-        <div className="card p-6">
+        <div className="glass-card p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="bg-rose-50 border border-rose-200 text-rose-700 px-3.5 py-2.5 rounded-lg text-sm">
@@ -104,14 +106,14 @@ export default function GirisPage() {
           <div className="mt-6 pt-6 border-t border-zinc-100 text-center space-y-2">
             <p className="text-sm text-zinc-600">
               Hesabınız yok mu?{" "}
-              <Link href="/kayit" className="text-zinc-900 hover:underline font-medium">
+              <Link href="/kayit" className="text-indigo-600 hover:text-indigo-700 hover:underline font-medium">
                 Kayıt olun
               </Link>
             </p>
             <p className="text-sm text-zinc-600">
               <Link
                 href="/sifremi-unuttum"
-                className="text-zinc-900 hover:underline font-medium"
+                className="text-indigo-600 hover:text-indigo-700 hover:underline font-medium"
               >
                 Şifrenizi mi unuttunuz?
               </Link>

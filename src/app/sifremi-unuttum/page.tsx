@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import BackgroundBlobs from "@/components/ui/BackgroundBlobs";
 
 export default function SifremiUnuttumPage() {
   const router = useRouter();
@@ -56,10 +57,11 @@ export default function SifremiUnuttumPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50">
-      <div className="w-full max-w-sm">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50 overflow-hidden">
+      <BackgroundBlobs />
+      <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 mx-auto mb-5 rounded-xl bg-zinc-900 flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto mb-5 rounded-xl gradient-box flex items-center justify-center">
             <svg
               className="w-6 h-6 text-white"
               fill="none"
@@ -82,7 +84,7 @@ export default function SifremiUnuttumPage() {
           </p>
         </div>
 
-        <div className="card p-6">
+        <div className="glass-card p-6">
           {!resetUrl ? (
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
@@ -120,7 +122,7 @@ export default function SifremiUnuttumPage() {
               <div className="pt-4 border-t border-zinc-100 text-center">
                 <Link
                   href="/giris"
-                  className="text-sm text-zinc-900 hover:underline font-medium"
+                  className="text-sm text-indigo-600 hover:text-indigo-700 hover:underline font-medium"
                 >
                   ← Giriş sayfasına dön
                 </Link>

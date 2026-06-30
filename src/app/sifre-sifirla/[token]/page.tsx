@@ -3,6 +3,7 @@
 import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import BackgroundBlobs from "@/components/ui/BackgroundBlobs";
 
 export default function SifreSifirlaPage({
   params,
@@ -56,10 +57,11 @@ export default function SifreSifirlaPage({
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50">
-      <div className="w-full max-w-sm">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50 overflow-hidden">
+      <BackgroundBlobs />
+      <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 mx-auto mb-5 rounded-xl bg-zinc-900 flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto mb-5 rounded-xl gradient-box flex items-center justify-center">
             <svg
               className="w-6 h-6 text-white"
               fill="none"
@@ -82,7 +84,7 @@ export default function SifreSifirlaPage({
           </p>
         </div>
 
-        <div className="card p-6">
+        <div className="glass-card p-6">
           {success ? (
             <div className="space-y-4">
               <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-3.5 py-2.5 rounded-lg text-sm">
@@ -157,7 +159,7 @@ export default function SifreSifirlaPage({
               <div className="pt-4 border-t border-zinc-100 text-center">
                 <Link
                   href="/giris"
-                  className="text-sm text-zinc-900 hover:underline font-medium"
+                  className="text-sm text-indigo-600 hover:text-indigo-700 hover:underline font-medium"
                 >
                   ← Giriş sayfasına dön
                 </Link>

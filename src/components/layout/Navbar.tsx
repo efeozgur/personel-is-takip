@@ -31,7 +31,7 @@ export function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <div className="w-8 h-8 rounded-lg gradient-box flex items-center justify-center group-hover:scale-105 transition-transform">
                 <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -49,8 +49,8 @@ export function Navbar() {
                     href={link.href}
                     className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                       isActive(link.href)
-                        ? "bg-zinc-100 text-zinc-900"
-                        : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
+                        ? "bg-indigo-50 text-indigo-700"
+                        : "text-zinc-600 hover:text-indigo-700 hover:bg-indigo-50/60"
                     }`}
                   >
                     {link.label}
@@ -62,8 +62,8 @@ export function Navbar() {
                       href="/admin/kategoriler"
                       className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                         isActive("/admin/kategoriler")
-                          ? "bg-zinc-100 text-zinc-900"
-                          : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
+                          ? "bg-indigo-50 text-indigo-700"
+                          : "text-zinc-600 hover:text-indigo-700 hover:bg-indigo-50/60"
                       }`}
                     >
                       Kategoriler
@@ -72,8 +72,8 @@ export function Navbar() {
                       href="/admin/kullanicilar"
                       className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                         isActive("/admin/kullanicilar")
-                          ? "bg-zinc-100 text-zinc-900"
-                          : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
+                          ? "bg-indigo-50 text-indigo-700"
+                          : "text-zinc-600 hover:text-indigo-700 hover:bg-indigo-50/60"
                       }`}
                     >
                       Kullanıcılar
@@ -88,7 +88,7 @@ export function Navbar() {
             {session ? (
               <>
                 <div className="hidden sm:flex items-center gap-2.5 pl-3 pr-1 py-1">
-                  <div className="w-7 h-7 rounded-full bg-zinc-900 flex items-center justify-center text-white text-xs font-medium">
+                  <div className="w-7 h-7 rounded-full gradient-box flex items-center justify-center text-white text-xs font-medium">
                     {session.user.name?.charAt(0).toUpperCase()}
                   </div>
                   <div className="text-sm leading-tight">
@@ -137,8 +137,8 @@ export function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className={`block px-3 py-2 rounded-lg text-sm font-medium ${
                   isActive(link.href)
-                    ? "bg-zinc-100 text-zinc-900"
-                    : "text-zinc-600 hover:bg-zinc-50"
+                    ? "bg-indigo-50 text-indigo-700"
+                    : "text-zinc-600 hover:bg-indigo-50/60"
                 }`}
               >
                 {link.label}
@@ -151,8 +151,8 @@ export function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className={`block px-3 py-2 rounded-lg text-sm font-medium ${
                     isActive("/admin/kategoriler")
-                      ? "bg-zinc-100 text-zinc-900"
-                      : "text-zinc-600 hover:bg-zinc-50"
+                      ? "bg-indigo-50 text-indigo-700"
+                      : "text-zinc-600 hover:bg-indigo-50/60"
                   }`}
                 >
                   Kategoriler
@@ -162,8 +162,8 @@ export function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className={`block px-3 py-2 rounded-lg text-sm font-medium ${
                     isActive("/admin/kullanicilar")
-                      ? "bg-zinc-100 text-zinc-900"
-                      : "text-zinc-600 hover:bg-zinc-50"
+                      ? "bg-indigo-50 text-indigo-700"
+                      : "text-zinc-600 hover:bg-indigo-50/60"
                   }`}
                 >
                   Kullanıcılar

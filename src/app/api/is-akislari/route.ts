@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
@@ -8,14 +9,14 @@ export async function GET(request: Request) {
   const categoryId = searchParams.get("categoryId");
   const tagId = searchParams.get("tagId");
 
-  const where: any = {};
+  const where: Prisma.ProcessWhereInput = {};
 
   if (search) {
     where.OR = [
-      { title: { contains: search, mode: "insensitive" } },
-      { description: { contains: search, mode: "insensitive" } },
-      { steps: { some: { title: { contains: search, mode: "insensitive" } } } },
-      { steps: { some: { description: { contains: search, mode: "insensitive" } } } },
+      { title: { contains: search } },
+      { description: { contains: search } },
+      { steps: { some: { title: { contains: search } } } },
+      { steps: { some: { description: { contains: search } } } },
     ];
   }
 
@@ -35,6 +36,17 @@ export async function GET(request: Request) {
       author: { select: { id: true, name: true } },
       tags: {
         include: { tag: { select: { id: true, name: true } } },
+      },
+      steps: {
+        take: 1,
+        orderBy: { order: "asc" },
+        select: {
+          images: {
+            take: 1,
+            orderBy: { order: "asc" },
+            select: { url: true },
+          },
+        },
       },
       _count: { select: { steps: true } },
     },
@@ -60,7 +72,7 @@ export async function POST(request: Request) {
     }
 
     // Tag adlarından ID çözümle (yoksa oluştur)
-    let tagIds: string[] = [];
+    const tagIds: string[] = [];
     if (tags?.length) {
       for (const t of tags) {
         const name = (typeof t === "string" ? t : "").trim().toLowerCase().replace(/^#/, "");

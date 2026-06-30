@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
+import Spinner from "@/components/ui/Spinner";
 
 interface Category {
   id: string;
@@ -34,6 +35,20 @@ interface StepData {
   toDelete?: boolean;
 }
 
+interface ProcessEditData {
+  title: string;
+  description: string | null;
+  categoryId: string;
+  author: { id: string };
+  tags: { tag: { id: string } }[];
+  steps: {
+    id: string;
+    description: string | null;
+    order: number;
+    images: { id: string; url: string }[];
+  }[];
+}
+
 export default function DuzenlePage() {
   const { data: session } = useSession();
   const params = useParams();
@@ -50,41 +65,43 @@ export default function DuzenlePage() {
   const [steps, setSteps] = useState<StepData[]>([]);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
-  useEffect(() => { if (session) fetchData(); }, [session]);
-
-  async function fetchData() {
-    try {
-      const [processRes, catRes, tagsRes] = await Promise.all([
-        fetch(`/api/is-akislari/${params.id}`),
-        fetch("/api/kategoriler"),
-        fetch("/api/etiketler"),
-      ]);
-      if (!processRes.ok) { router.push("/is-akislari"); return; }
-      const processData = await processRes.json();
-      const catData = await catRes.json();
-      const tagsData = await tagsRes.json();
-      if (session?.user.role !== "ADMIN" && processData.author.id !== session?.user.id) {
-        router.push(`/is-akislari/${params.id}`); return;
-      }
-      setTitle(processData.title);
-      setDescription(processData.description || "");
-      setCategoryId(processData.categoryId);
-      setCategories(catData);
-      setTags(tagsData);
-      setSelectedTags(processData.tags.map((pt: any) => pt.tag.id));
-      setSteps(
-        processData.steps.map((step: any) => ({
-          id: step.id,
-          description: step.description || "",
-          order: step.order,
-          images: step.images.map((img: any) => ({ id: img.id, url: img.url })),
-          isNew: false,
-          toDelete: false,
-        }))
-      );
-    } catch (error) { console.error("Veri yüklenirken hata:", error); }
-    finally { setLoading(false); }
-  }
+  useEffect(() => {
+    if (!session) return;
+    async function load() {
+      try {
+        const [processRes, catRes, tagsRes] = await Promise.all([
+          fetch(`/api/is-akislari/${params.id}`),
+          fetch("/api/kategoriler"),
+          fetch("/api/etiketler"),
+        ]);
+        if (!processRes.ok) { router.push("/is-akislari"); return; }
+        const processData: ProcessEditData = await processRes.json();
+        const catData: Category[] = await catRes.json();
+        const tagsData: Tag[] = await tagsRes.json();
+        if (session?.user.role !== "ADMIN" && processData.author.id !== session?.user.id) {
+          router.push(`/is-akislari/${params.id}`); return;
+        }
+        setTitle(processData.title);
+        setDescription(processData.description || "");
+        setCategoryId(processData.categoryId);
+        setCategories(catData);
+        setTags(tagsData);
+        setSelectedTags(processData.tags.map((pt) => pt.tag.id));
+        setSteps(
+          processData.steps.map((step) => ({
+            id: step.id,
+            description: step.description || "",
+            order: step.order,
+            images: step.images.map((img) => ({ id: img.id, url: img.url })),
+            isNew: false,
+            toDelete: false,
+          }))
+        );
+      } catch (error) { console.error("Veri yüklenirken hata:", error); }
+      finally { setLoading(false); }
+    }
+    load();
+  }, [session]);
 
   const addStep = () => {
     const maxOrder = steps.length > 0 ? Math.max(...steps.filter(s => !s.toDelete).map(s => s.order)) : 0;
@@ -112,7 +129,7 @@ export default function DuzenlePage() {
       }));
       newSteps[index].images = [...newSteps[index].images, ...newImages];
     } else {
-      (newSteps[index] as any)[field] = value;
+      newSteps[index].description = value as string;
     }
     setSteps(newSteps);
   };
@@ -228,8 +245,8 @@ export default function DuzenlePage() {
       }
 
       router.push(`/is-akislari/${params.id}`);
-    } catch (err: any) {
-      setError(err.message || "Bir hata oluştu.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Bir hata oluştu.");
     } finally {
       setSaving(false);
     }
@@ -238,16 +255,16 @@ export default function DuzenlePage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[80vh]">
-        <div className="w-10 h-10 rounded-full border-2 border-indigo-200 border-t-indigo-600 animate-spin"></div>
+        <Spinner size="lg" />
       </div>
     );
   }
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-2">
-        <span className="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center">
-          <svg className="w-5 h-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <h1 className="text-2xl font-bold text-zinc-900 mb-8 flex items-center gap-2">
+        <span className="w-9 h-9 rounded-xl gradient-box flex items-center justify-center">
+          <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
           </svg>
         </span>
@@ -256,7 +273,7 @@ export default function DuzenlePage() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="glass-card border-rose-200 bg-rose-50/50 p-4 text-rose-700 text-sm rounded-xl flex items-start gap-3">
+          <div className="border border-rose-200 bg-rose-50 p-4 text-rose-700 text-sm rounded-xl flex items-start gap-3">
             <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -265,25 +282,25 @@ export default function DuzenlePage() {
         )}
 
         {/* Temel Bilgiler */}
-        <div className="glass-card p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-            <span className="w-7 h-7 rounded-lg bg-indigo-100 flex items-center justify-center text-xs text-indigo-600">1</span>
+        <div className="card p-6 space-y-4">
+          <h2 className="text-lg font-semibold text-zinc-900 flex items-center gap-2">
+            <span className="w-7 h-7 rounded-lg bg-indigo-100 flex items-center justify-center text-xs text-indigo-600 font-semibold">1</span>
             Temel Bilgiler
           </h2>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Başlık *</label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="glass-input w-full" required />
+            <label className="block text-sm font-medium text-zinc-700 mb-1.5">Başlık *</label>
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="input w-full" required />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Açıklama</label>
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} className="glass-input w-full" />
+            <label className="block text-sm font-medium text-zinc-700 mb-1.5">Açıklama</label>
+            <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} className="input w-full" />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Kategori *</label>
-            <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className="glass-input w-full" required>
+            <label className="block text-sm font-medium text-zinc-700 mb-1.5">Kategori *</label>
+            <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className="input w-full" required>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>{cat.name}</option>
               ))}
@@ -291,12 +308,12 @@ export default function DuzenlePage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Etiketler</label>
+            <label className="block text-sm font-medium text-zinc-700 mb-1.5">Etiketler</label>
             <div className="flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <button key={tag.id} type="button" onClick={() => setSelectedTags((prev) => prev.includes(tag.id) ? prev.filter((t) => t !== tag.id) : [...prev, tag.id])}
                   className={`text-sm px-3 py-1.5 rounded-full border transition-all duration-200 ${
-                    selectedTags.includes(tag.id) ? "bg-indigo-100 border-indigo-300 text-indigo-700" : "bg-white border-gray-200 text-gray-600 hover:border-gray-300"
+                    selectedTags.includes(tag.id) ? "bg-indigo-100 border-indigo-300 text-indigo-700" : "bg-white border-zinc-200 text-zinc-600 hover:border-zinc-300"
                   }`}>
                   #{tag.name}
                 </button>
@@ -306,10 +323,10 @@ export default function DuzenlePage() {
         </div>
 
         {/* Adımlar */}
-        <div className="glass-card p-6">
+        <div className="card p-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-              <span className="w-7 h-7 rounded-lg bg-purple-100 flex items-center justify-center text-xs text-purple-600">2</span>
+            <h2 className="text-lg font-semibold text-zinc-900 flex items-center gap-2">
+              <span className="w-7 h-7 rounded-lg bg-violet-100 flex items-center justify-center text-xs text-violet-600 font-semibold">2</span>
               Adımlar ({steps.filter(s => !s.toDelete).length})
             </h2>
             <button type="button" onClick={addStep} className="btn-secondary text-sm py-1.5 px-3 flex items-center gap-1">
@@ -324,13 +341,13 @@ export default function DuzenlePage() {
               <div
                 key={index}
                 className={`border rounded-xl p-5 transition-all ${
-                  step.isNew ? "border-emerald-300 bg-emerald-50/50" : "border-gray-200 bg-white/50"
+                  step.isNew ? "border-emerald-300 bg-emerald-50" : "border-zinc-200 bg-white"
                 }`}
                 onPaste={(e) => handlePaste(e, index)}
               >
                 <div className="flex justify-between items-center mb-3">
-                  <h3 className="font-medium text-gray-900 flex items-center gap-2">
-                    <span className={`${step.isNew ? "bg-emerald-500" : ""} step-indicator text-xs`}>{step.order}</span>
+                  <h3 className="font-medium text-zinc-900 flex items-center gap-2">
+                    <span className="step-indicator text-xs">{step.order}</span>
                     Adım {step.order}
                     {step.isNew && <span className="text-xs text-emerald-600 font-normal ml-1">(Yeni)</span>}
                   </h3>
@@ -341,11 +358,11 @@ export default function DuzenlePage() {
                 </div>
 
                 <div className="space-y-3">
-                  <textarea value={step.description} onChange={(e) => updateStep(index, "description", e.target.value)} rows={3} className="glass-input w-full" placeholder="Bu adımda ne yapılmalı? Detaylı açıklama, ipuçları..." required />
+                  <textarea value={step.description} onChange={(e) => updateStep(index, "description", e.target.value)} rows={3} className="input w-full" placeholder="Bu adımda ne yapılmalı? Detaylı açıklama, ipuçları..." required />
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Ekran Görüntüleri</label>
-                    <p className="text-xs text-gray-400 mb-2">Dosya seçebilir veya Ctrl+V ile resim yapıştırabilirsiniz</p>
+                    <label className="block text-sm font-medium text-zinc-700 mb-1.5">Ekran Görüntüleri</label>
+                    <p className="text-xs text-zinc-400 mb-2">Dosya seçebilir veya Ctrl+V ile resim yapıştırabilirsiniz</p>
                     <input type="file" accept="image/*" multiple onChange={(e) => {
                       const files = Array.from(e.target.files || []);
                       if (files.length > 0) updateStep(index, "images", files);
@@ -357,8 +374,8 @@ export default function DuzenlePage() {
                           !img.toDelete && (
                           <div
                             key={imgIndex}
-                            className={`relative group rounded-lg overflow-hidden border cursor-zoom-in ${
-                              img.isNew ? "border-emerald-300" : "border-gray-200"
+                            className={`relative group rounded-lg overflow-hidden border cursor-zoom-in shadow-sm ${
+                              img.isNew ? "border-emerald-300" : "border-zinc-200"
                             }`}
                             onClick={() => setLightboxImage(img.preview || img.url)}
                           >
