@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import BackgroundBlobs from "@/components/ui/BackgroundBlobs";
 
 export default function SifremiUnuttumPage() {
   const router = useRouter();
@@ -56,10 +57,11 @@ export default function SifremiUnuttumPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50">
-      <div className="w-full max-w-sm">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-transparent overflow-hidden">
+      <BackgroundBlobs />
+      <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 mx-auto mb-5 rounded-xl bg-zinc-900 flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto mb-5 rounded-xl accent-box flex items-center justify-center">
             <svg
               className="w-6 h-6 text-white"
               fill="none"
@@ -74,19 +76,19 @@ export default function SifremiUnuttumPage() {
               />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-zinc-900 tracking-tight">
+          <h2 className="text-xl font-semibold text-orange-300 tracking-tight">
             Şifrenizi mi unuttunuz?
           </h2>
-          <p className="text-sm text-zinc-500 mt-1.5">
+          <p className="text-sm text-slate-400 mt-1.5">
             E-posta adresinizi girin, sıfırlama bağlantısı oluşturalım.
           </p>
         </div>
 
-        <div className="card p-6">
+        <div className="glass-card p-6">
           {!resetUrl ? (
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
-                <div className="bg-rose-50 border border-rose-200 text-rose-700 px-3.5 py-2.5 rounded-lg text-sm">
+                <div className="bg-rose-500/10 border border-rose-400/30 text-rose-200 px-3.5 py-2.5 rounded-lg text-sm">
                   {error}
                 </div>
               )}
@@ -94,7 +96,7 @@ export default function SifremiUnuttumPage() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-zinc-900 mb-1.5"
+                  className="block text-sm font-medium text-white mb-1.5"
                 >
                   E-posta
                 </label>
@@ -117,10 +119,10 @@ export default function SifremiUnuttumPage() {
                 {loading ? "Gönderiliyor..." : "Sıfırlama Bağlantısı Oluştur"}
               </button>
 
-              <div className="pt-4 border-t border-zinc-100 text-center">
+              <div className="pt-4 border-t border-white/10 text-center">
                 <Link
                   href="/giris"
-                  className="text-sm text-zinc-900 hover:underline font-medium"
+                  className="text-sm text-orange-300 hover:text-orange-300 hover:underline font-medium"
                 >
                   ← Giriş sayfasına dön
                 </Link>
@@ -128,18 +130,18 @@ export default function SifremiUnuttumPage() {
             </form>
           ) : (
             <div className="space-y-4">
-              <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-3.5 py-2.5 rounded-lg text-sm">
+              <div className="bg-emerald-500/10 border border-emerald-400/30 text-emerald-200 px-3.5 py-2.5 rounded-lg text-sm">
                 Sıfırlama bağlantısı oluşturuldu. Aşağıdaki bağlantıya tıklayarak
                 yeni şifre belirleyebilirsiniz.
                 {expiresAt && (
-                  <span className="block mt-1 text-emerald-700">
+                  <span className="block mt-1 text-emerald-300">
                     Bağlantının geçerlilik süresi:{" "}
                     {new Date(expiresAt).toLocaleString("tr-TR")}
                   </span>
                 )}
               </div>
 
-              <div className="bg-zinc-50 border border-zinc-200 rounded-lg p-3 text-xs font-mono break-all text-zinc-700">
+              <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-xs font-mono break-all text-slate-200">
                 {resetUrl}
               </div>
 
@@ -160,7 +162,7 @@ export default function SifremiUnuttumPage() {
                 </button>
               </div>
 
-              <p className="text-xs text-zinc-500 text-center pt-2">
+              <p className="text-xs text-slate-400 text-center pt-2">
                 Üretim ortamında bu bağlantı e-posta ile gönderilir. Demo
                 ortamında doğrudan burada görüntüleniyor.
               </p>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import BackgroundBlobs from "@/components/ui/BackgroundBlobs";
 
 export default function GirisPage() {
   const router = useRouter();
@@ -42,28 +43,29 @@ export default function GirisPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50">
-      <div className="w-full max-w-sm">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-transparent overflow-hidden">
+      <BackgroundBlobs />
+      <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 mx-auto mb-5 rounded-xl bg-zinc-900 flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto mb-5 rounded-xl accent-box flex items-center justify-center">
             <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-zinc-900 tracking-tight">Hesabınıza giriş yapın</h2>
-          <p className="text-sm text-zinc-500 mt-1.5">Personel İş Akışı platformuna hoş geldiniz</p>
+          <h2 className="text-xl font-semibold text-orange-300 tracking-tight">Hesabınıza giriş yapın</h2>
+          <p className="text-sm text-slate-400 mt-1.5">Personel İş Akışı platformuna hoş geldiniz</p>
         </div>
 
-        <div className="card p-6">
+        <div className="glass-card p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="bg-rose-50 border border-rose-200 text-rose-700 px-3.5 py-2.5 rounded-lg text-sm">
+              <div className="bg-rose-500/10 border border-rose-400/30 text-rose-200 px-3.5 py-2.5 rounded-lg text-sm">
                 {error}
               </div>
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-zinc-900 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-medium text-white mb-1.5">
                 Email
               </label>
               <input
@@ -78,7 +80,7 @@ export default function GirisPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-zinc-900 mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-white mb-1.5">
                 Şifre
               </label>
               <input
@@ -101,17 +103,17 @@ export default function GirisPage() {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-zinc-100 text-center space-y-2">
-            <p className="text-sm text-zinc-600">
+          <div className="mt-6 pt-6 border-t border-white/10 text-center space-y-2">
+            <p className="text-sm text-slate-300">
               Hesabınız yok mu?{" "}
-              <Link href="/kayit" className="text-zinc-900 hover:underline font-medium">
+              <Link href="/kayit" className="text-orange-300 hover:text-orange-300 hover:underline font-medium">
                 Kayıt olun
               </Link>
             </p>
-            <p className="text-sm text-zinc-600">
+            <p className="text-sm text-slate-300">
               <Link
                 href="/sifremi-unuttum"
-                className="text-zinc-900 hover:underline font-medium"
+                className="text-orange-300 hover:text-orange-300 hover:underline font-medium"
               >
                 Şifrenizi mi unuttunuz?
               </Link>

@@ -15,9 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
-      <body
-        className="antialiased bg-zinc-50 text-zinc-900"
-      >
+      <body className="antialiased text-white">
         <AuthProvider>
           <Navbar />
           <main>{children}</main>

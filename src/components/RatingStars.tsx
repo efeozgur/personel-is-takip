@@ -67,7 +67,7 @@ export default function RatingStars({
             <svg
               viewBox="0 0 24 24"
               className={`${sizeClass} ${
-                filled || half ? "text-amber-500" : "text-zinc-300"
+                filled || half ? "text-orange-400" : "text-white/20"
               }`}
               fill="currentColor"
             >
@@ -87,11 +87,11 @@ export default function RatingStars({
     <div className="flex items-center gap-2">
       {content}
       {count > 0 ? (
-        <span className={`${textClass} text-zinc-500 tabular-nums`}>
+        <span className={`${textClass} text-slate-400 tabular-nums`}>
           {value.toFixed(1)} · {count} puan
         </span>
       ) : (
-        <span className={`${textClass} text-zinc-400`}>Henüz puan yok</span>
+        <span className={`${textClass} text-slate-500`}>Henüz puan yok</span>
       )}
     </div>
   );

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import BackgroundBlobs from "@/components/ui/BackgroundBlobs";
 
 export default function KayitPage() {
   const router = useRouter();
@@ -55,33 +56,34 @@ export default function KayitPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50">
-      <div className="w-full max-w-sm">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-transparent overflow-hidden">
+      <BackgroundBlobs />
+      <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 mx-auto mb-5 rounded-xl bg-zinc-900 flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto mb-5 rounded-xl accent-box flex items-center justify-center">
             <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-zinc-900 tracking-tight">Hesap oluşturun</h2>
-          <p className="text-sm text-zinc-500 mt-1.5">Kayıt olduktan sonra admin onayı gereklidir</p>
+          <h2 className="text-xl font-semibold text-orange-300 tracking-tight">Hesap oluşturun</h2>
+          <p className="text-sm text-slate-400 mt-1.5">Kayıt olduktan sonra admin onayı gereklidir</p>
         </div>
 
-        <div className="card p-6">
+        <div className="glass-card p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="bg-rose-50 border border-rose-200 text-rose-700 px-3.5 py-2.5 rounded-lg text-sm">
+              <div className="bg-rose-500/10 border border-rose-400/30 text-rose-200 px-3.5 py-2.5 rounded-lg text-sm">
                 {error}
               </div>
             )}
             {success && (
-              <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-3.5 py-2.5 rounded-lg text-sm">
+              <div className="bg-emerald-500/10 border border-emerald-400/30 text-emerald-200 px-3.5 py-2.5 rounded-lg text-sm">
                 {success}
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-zinc-900 mb-1.5">Ad Soyad</label>
+              <label className="block text-sm font-medium text-white mb-1.5">Ad Soyad</label>
               <input
                 type="text"
                 required
@@ -93,7 +95,7 @@ export default function KayitPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-900 mb-1.5">Email</label>
+              <label className="block text-sm font-medium text-white mb-1.5">Email</label>
               <input
                 type="email"
                 required
@@ -105,7 +107,7 @@ export default function KayitPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-900 mb-1.5">Şifre</label>
+              <label className="block text-sm font-medium text-white mb-1.5">Şifre</label>
               <input
                 type="password"
                 required
@@ -117,7 +119,7 @@ export default function KayitPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-zinc-900 mb-1.5">Şifre Tekrar</label>
+              <label className="block text-sm font-medium text-white mb-1.5">Şifre Tekrar</label>
               <input
                 type="password"
                 required
@@ -137,10 +139,10 @@ export default function KayitPage() {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-zinc-100 text-center">
-            <p className="text-sm text-zinc-600">
+          <div className="mt-6 pt-6 border-t border-white/10 text-center">
+            <p className="text-sm text-slate-300">
               Zaten hesabınız var mı?{" "}
-              <Link href="/giris" className="text-zinc-900 hover:underline font-medium">
+              <Link href="/giris" className="text-orange-300 hover:text-orange-300 hover:underline font-medium">
                 Giriş yapın
               </Link>
             </p>

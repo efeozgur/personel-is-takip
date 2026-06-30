@@ -3,6 +3,7 @@
 import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import BackgroundBlobs from "@/components/ui/BackgroundBlobs";
 
 export default function SifreSifirlaPage({
   params,
@@ -56,10 +57,11 @@ export default function SifreSifirlaPage({
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-zinc-50">
-      <div className="w-full max-w-sm">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-transparent overflow-hidden">
+      <BackgroundBlobs />
+      <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 mx-auto mb-5 rounded-xl bg-zinc-900 flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto mb-5 rounded-xl accent-box flex items-center justify-center">
             <svg
               className="w-6 h-6 text-white"
               fill="none"
@@ -74,18 +76,18 @@ export default function SifreSifirlaPage({
               />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-zinc-900 tracking-tight">
+          <h2 className="text-xl font-semibold text-orange-300 tracking-tight">
             Yeni Şifre Belirle
           </h2>
-          <p className="text-sm text-zinc-500 mt-1.5">
+          <p className="text-sm text-slate-400 mt-1.5">
             Hesabınız için yeni bir şifre oluşturun.
           </p>
         </div>
 
-        <div className="card p-6">
+        <div className="glass-card p-6">
           {success ? (
             <div className="space-y-4">
-              <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-3.5 py-2.5 rounded-lg text-sm">
+              <div className="bg-emerald-500/10 border border-emerald-400/30 text-emerald-200 px-3.5 py-2.5 rounded-lg text-sm">
                 Şifreniz başarıyla güncellendi. Giriş sayfasına
                 yönlendiriliyorsunuz…
               </div>
@@ -99,7 +101,7 @@ export default function SifreSifirlaPage({
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
-                <div className="bg-rose-50 border border-rose-200 text-rose-700 px-3.5 py-2.5 rounded-lg text-sm">
+                <div className="bg-rose-500/10 border border-rose-400/30 text-rose-200 px-3.5 py-2.5 rounded-lg text-sm">
                   {error}
                 </div>
               )}
@@ -107,7 +109,7 @@ export default function SifreSifirlaPage({
               <div>
                 <label
                   htmlFor="newPassword"
-                  className="block text-sm font-medium text-zinc-900 mb-1.5"
+                  className="block text-sm font-medium text-white mb-1.5"
                 >
                   Yeni Şifre
                 </label>
@@ -122,7 +124,7 @@ export default function SifreSifirlaPage({
                   placeholder="••••••••"
                   autoFocus
                 />
-                <p className="text-xs text-zinc-500 mt-1">
+                <p className="text-xs text-slate-400 mt-1">
                   En az 8 karakter.
                 </p>
               </div>
@@ -130,7 +132,7 @@ export default function SifreSifirlaPage({
               <div>
                 <label
                   htmlFor="confirm"
-                  className="block text-sm font-medium text-zinc-900 mb-1.5"
+                  className="block text-sm font-medium text-white mb-1.5"
                 >
                   Yeni Şifre (Tekrar)
                 </label>
@@ -154,10 +156,10 @@ export default function SifreSifirlaPage({
                 {loading ? "Güncelleniyor..." : "Şifreyi Güncelle"}
               </button>
 
-              <div className="pt-4 border-t border-zinc-100 text-center">
+              <div className="pt-4 border-t border-white/10 text-center">
                 <Link
                   href="/giris"
-                  className="text-sm text-zinc-900 hover:underline font-medium"
+                  className="text-sm text-orange-300 hover:text-orange-300 hover:underline font-medium"
                 >
                   ← Giriş sayfasına dön
                 </Link>
