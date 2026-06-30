@@ -100,8 +100,8 @@ export default function AdminKategorilerPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-          <span className="w-9 h-9 rounded-xl gradient-box flex items-center justify-center">
+        <h1 className="text-2xl font-bold text-orange-300 flex items-center gap-2">
+          <span className="w-9 h-9 rounded-xl accent-box flex items-center justify-center">
             <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
             </svg>
@@ -122,7 +122,7 @@ export default function AdminKategorilerPage() {
       {/* Ekleme / Düzenleme Formu */}
       {isAdding && (
         <div className="card p-6 mb-8">
-          <h2 className="text-lg font-semibold text-white mb-4">
+          <h2 className="text-lg font-semibold text-orange-300 mb-4">
             {editingId ? "Kategori Düzenle" : "Yeni Kategori"}
           </h2>
           <form onSubmit={handleSave} className="space-y-4">

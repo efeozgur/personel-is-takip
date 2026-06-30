@@ -60,12 +60,12 @@ export default function KayitPage() {
       <BackgroundBlobs />
       <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 mx-auto mb-5 rounded-xl gradient-box flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto mb-5 rounded-xl accent-box flex items-center justify-center">
             <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-white tracking-tight">Hesap oluşturun</h2>
+          <h2 className="text-xl font-semibold text-orange-300 tracking-tight">Hesap oluşturun</h2>
           <p className="text-sm text-slate-400 mt-1.5">Kayıt olduktan sonra admin onayı gereklidir</p>
         </div>
 

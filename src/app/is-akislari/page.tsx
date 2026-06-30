@@ -95,8 +95,8 @@ function IsAkislariContent() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-          <span className="w-9 h-9 rounded-xl gradient-box flex items-center justify-center">
+        <h1 className="text-2xl font-bold text-orange-300 flex items-center gap-2">
+          <span className="w-9 h-9 rounded-xl accent-box flex items-center justify-center">
             <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
@@ -188,7 +188,7 @@ function IsAkislariContent() {
                       />
                     </div>
                   ) : (
-                    <div className="h-36 w-full bg-gradient-to-br from-navy-950 via-navy-700 to-orange-500 flex items-center justify-center text-5xl">
+                    <div className="h-36 w-full bg-orange-500/15 flex items-center justify-center text-5xl">
                       {process.category.icon || "📁"}
                     </div>
                   )}
@@ -204,7 +204,7 @@ function IsAkislariContent() {
                         {process._count.steps} adım
                       </span>
                     </div>
-                    <h3 className="font-semibold text-white mb-2 group-hover:text-orange-300 transition-colors line-clamp-2">
+                    <h3 className="font-semibold text-orange-300 mb-2 group-hover:text-orange-300 transition-colors line-clamp-2">
                       {process.title}
                     </h3>
                     {process.description && (
@@ -220,7 +220,7 @@ function IsAkislariContent() {
                     <div className="flex items-center justify-between pt-3 border-t border-white/10">
                       <div className="flex items-center gap-3 min-w-0">
                         <div className="flex items-center gap-1.5 flex-shrink-0">
-                          <div className="w-6 h-6 rounded-full gradient-box flex items-center justify-center text-white text-[10px] font-medium">
+                          <div className="w-6 h-6 rounded-full accent-box flex items-center justify-center text-white text-[10px] font-medium">
                             {process.author.name.charAt(0)}
                           </div>
                           <span className="text-xs text-slate-400 truncate max-w-[80px]">{process.author.name}</span>

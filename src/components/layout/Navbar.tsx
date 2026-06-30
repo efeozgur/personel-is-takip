@@ -31,12 +31,12 @@ export function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded-lg gradient-box flex items-center justify-center group-hover:scale-105 transition-transform">
+              <div className="w-8 h-8 rounded-lg accent-box flex items-center justify-center group-hover:scale-105 transition-transform">
                 <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <span className="text-base font-semibold text-white hidden sm:block tracking-tight">
+              <span className="text-base font-semibold text-orange-300 hidden sm:block tracking-tight">
                 Personel İş Akışı
               </span>
             </Link>
@@ -88,7 +88,7 @@ export function Navbar() {
             {session ? (
               <>
                 <div className="hidden sm:flex items-center gap-2.5 pl-3 pr-1 py-1">
-                  <div className="w-7 h-7 rounded-full gradient-box flex items-center justify-center text-white text-xs font-medium">
+                  <div className="w-7 h-7 rounded-full accent-box flex items-center justify-center text-white text-xs font-medium">
                     {session.user.name?.charAt(0).toUpperCase()}
                   </div>
                   <div className="text-sm leading-tight">

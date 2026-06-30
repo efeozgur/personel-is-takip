@@ -178,8 +178,8 @@ export default function AdminKullanicilarPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-bold text-white mb-8 flex items-center gap-2">
-        <span className="w-9 h-9 rounded-xl gradient-box flex items-center justify-center">
+      <h1 className="text-2xl font-bold text-orange-300 mb-8 flex items-center gap-2">
+        <span className="w-9 h-9 rounded-xl accent-box flex items-center justify-center">
           <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -206,7 +206,7 @@ export default function AdminKullanicilarPage() {
                 <tr key={user.id} className="hover:bg-orange-500/10 transition-colors">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full gradient-box flex items-center justify-center text-white text-xs font-medium">
+                      <div className="w-8 h-8 rounded-full accent-box flex items-center justify-center text-white text-xs font-medium">
                         {user.name.charAt(0)}
                       </div>
                       <span className="text-sm font-medium text-white">{user.name}</span>
@@ -263,7 +263,7 @@ export default function AdminKullanicilarPage() {
           {users.map((user) => (
             <div key={user.id} className="p-4 space-y-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full gradient-box flex items-center justify-center text-white text-sm font-medium">
+                <div className="w-10 h-10 rounded-full accent-box flex items-center justify-center text-white text-sm font-medium">
                   {user.name.charAt(0)}
                 </div>
                 <div>
@@ -327,7 +327,7 @@ export default function AdminKullanicilarPage() {
             className="card w-full max-w-md p-6 animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-lg font-semibold text-white mb-1">
+            <h2 className="text-lg font-semibold text-orange-300 mb-1">
               Kullanıcıyı Düzenle
             </h2>
             <p className="text-xs text-slate-500 mb-5">

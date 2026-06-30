@@ -61,7 +61,7 @@ export default function SifremiUnuttumPage() {
       <BackgroundBlobs />
       <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 mx-auto mb-5 rounded-xl gradient-box flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto mb-5 rounded-xl accent-box flex items-center justify-center">
             <svg
               className="w-6 h-6 text-white"
               fill="none"
@@ -76,7 +76,7 @@ export default function SifremiUnuttumPage() {
               />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-white tracking-tight">
+          <h2 className="text-xl font-semibold text-orange-300 tracking-tight">
             Şifrenizi mi unuttunuz?
           </h2>
           <p className="text-sm text-slate-400 mt-1.5">

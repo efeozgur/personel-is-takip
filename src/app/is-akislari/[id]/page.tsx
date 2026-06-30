@@ -105,13 +105,13 @@ export default function IsAkisiDetayPage() {
               <span className="badge-corporate text-[11px]">{process.category.icon || "📁"} {process.category.name}</span>
               <span>•</span>
               <span className="flex items-center gap-1">
-                <div className="w-4 h-4 rounded-full gradient-box flex items-center justify-center text-white text-[8px]">{process.author.name.charAt(0)}</div>
+                <div className="w-4 h-4 rounded-full accent-box flex items-center justify-center text-white text-[8px]">{process.author.name.charAt(0)}</div>
                 {process.author.name}
               </span>
               <span>•</span>
               <span>{new Date(process.createdAt).toLocaleDateString("tr-TR")}</span>
             </div>
-            <h1 className="text-2xl font-bold text-white">{process.title}</h1>
+            <h1 className="text-2xl font-bold text-orange-300">{process.title}</h1>
             {process.description && <p className="mt-2 text-slate-400">{process.description}</p>}
             <div className="flex flex-wrap gap-1.5 mt-3">
               {process.tags.map((pt) => (
@@ -139,7 +139,7 @@ export default function IsAkisiDetayPage() {
       <div className="card p-6 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h3 className="text-sm font-semibold text-white mb-1.5">Topluluk Puanı</h3>
+            <h3 className="text-sm font-semibold text-orange-300 mb-1.5">Topluluk Puanı</h3>
             <RatingStars
               value={process.ratingAverage}
               count={process.ratingCount}
@@ -179,7 +179,7 @@ export default function IsAkisiDetayPage() {
         {/* Sidebar - Adım İlerleme Çizelgesi */}
         <div className="lg:w-64 flex-shrink-0">
           <div className="card p-4 sticky top-20">
-            <h3 className="font-semibold text-white mb-3 text-sm flex items-center gap-2">
+            <h3 className="font-semibold text-orange-300 mb-3 text-sm flex items-center gap-2">
               <svg className="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
               Adımlar
             </h3>
@@ -192,7 +192,7 @@ export default function IsAkisiDetayPage() {
                 </div>
                 <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-navy-800 to-orange-500 rounded-full transition-all duration-300"
+                    className="h-full bg-orange-500 rounded-full transition-all duration-300"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
@@ -218,7 +218,7 @@ export default function IsAkisiDetayPage() {
                     <span
                       className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
                         isActive
-                          ? "bg-gradient-to-br from-navy-950 to-orange-500 text-white shadow-sm"
+                          ? "bg-orange-500 text-white shadow-sm"
                           : isCompleted
                           ? "bg-emerald-500 text-white"
                           : "bg-white/10 text-slate-500"
@@ -247,7 +247,7 @@ export default function IsAkisiDetayPage() {
           ) : (
             <div key={activeStep} className="card p-6 animate-fade-in-up">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+                <h2 className="text-xl font-semibold text-orange-300 flex items-center gap-2">
                   <span className="step-indicator">{process.steps[activeStep].order}</span>
                   {process.steps[activeStep].title}
                 </h2>

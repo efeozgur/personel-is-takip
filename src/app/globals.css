@@ -43,10 +43,7 @@
 @layer base {
   body {
     min-height: 100vh;
-    background:
-      radial-gradient(circle at top right, rgba(249, 115, 22, 0.22), transparent 30rem),
-      radial-gradient(circle at bottom left, rgba(47, 120, 184, 0.2), transparent 34rem),
-      linear-gradient(180deg, #06162b 0%, #081d36 48%, #0b2341 100%);
+    background: #06162b;
     color: #e2e8f0;
     font-family: var(--font-sans);
     letter-spacing: -0.01em;
@@ -177,7 +174,7 @@
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, #f97316 0%, #ea580c 42%, #0b2341 100%);
+    background: #f97316;
     color: #ffffff;
     font-weight: 700;
     font-size: 14px;
@@ -193,8 +190,8 @@
   }
 
   .btn-primary:hover {
+    background: #ea580c;
     box-shadow: 0 16px 36px rgba(249, 115, 22, 0.34), 0 12px 32px rgba(0, 0, 0, 0.24);
-    transform: translateY(-1px);
   }
 
   .btn-primary:active {
@@ -338,7 +335,7 @@
     justify-content: center;
     font-size: 13px;
     font-weight: 800;
-    background: linear-gradient(135deg, #f97316 0%, #0b2341 100%);
+    background: #f97316;
     color: white;
     box-shadow: 0 8px 22px rgba(249, 115, 22, 0.22);
   }
@@ -396,15 +393,12 @@
     overflow: hidden;
   }
 
-  .gradient-text {
-    background: linear-gradient(135deg, #ffffff 0%, #b7d4ee 44%, #fb923c 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .accent-text {
+    color: #fb923c;
   }
 
-  .gradient-box {
-    background: linear-gradient(135deg, #f97316 0%, #194b78 52%, #06162b 100%);
+  .accent-box {
+    background: #f97316;
     box-shadow: 0 12px 30px rgba(249, 115, 22, 0.22);
   }
 }

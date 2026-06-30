@@ -81,13 +81,13 @@ export default function HomePage() {
         <BackgroundBlobs />
         <div className="relative z-10 text-center max-w-2xl w-full">
           <div className="mb-10">
-            <div className="w-14 h-14 mx-auto mb-8 rounded-2xl gradient-box flex items-center justify-center">
+            <div className="w-14 h-14 mx-auto mb-8 rounded-2xl accent-box flex items-center justify-center">
               <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-5">
-              Personel <span className="gradient-text">İş Akışı</span>
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-orange-300 mb-5">
+              Personel <span className="accent-text">İş Akışı</span>
             </h1>
             <p className="text-lg text-slate-300 mb-10 leading-relaxed max-w-xl mx-auto">
               İş akışlarını adım adım öğrenin, bilgi paylaşımında bulunun
@@ -137,8 +137,8 @@ export default function HomePage() {
       {/* Welcome */}
       <div className="flex items-center justify-between mb-10">
         <div>
-          <h1 className="text-2xl font-semibold text-white tracking-tight">
-            Hoş Geldiniz, <span className="gradient-text">{session.user.name}</span>
+          <h1 className="text-2xl font-semibold text-orange-300 tracking-tight">
+            Hoş Geldiniz, <span className="accent-text">{session.user.name}</span>
           </h1>
           <p className="text-sm text-slate-400 mt-1">
             İş akışlarını keşfedin ve bilgi paylaşımında bulunun
@@ -177,7 +177,7 @@ export default function HomePage() {
       {categories.length > 0 && (
         <div className="mb-14">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-base font-semibold text-white">Kategoriler</h2>
+            <h2 className="text-base font-semibold text-orange-300">Kategoriler</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {categories.map((category) => (
@@ -189,7 +189,7 @@ export default function HomePage() {
                 <div className="w-10 h-10 mb-3 rounded-xl bg-white/5 flex items-center justify-center text-xl">
                   {category.icon || categoryIcons[category.name] || "📁"}
                 </div>
-                <h3 className="font-medium text-white text-sm mb-0.5">
+                <h3 className="font-medium text-orange-300 text-sm mb-0.5">
                   {category.name}
                 </h3>
                 <p className="text-xs text-slate-400">
@@ -204,7 +204,7 @@ export default function HomePage() {
       {/* Son Eklenen İş Akışları */}
       <div>
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-base font-semibold text-white">Son Eklenen</h2>
+          <h2 className="text-base font-semibold text-orange-300">Son Eklenen</h2>
           <Link
             href="/is-akislari"
             className="text-sm font-medium text-orange-300 hover:text-orange-300 inline-flex items-center gap-1"
@@ -250,7 +250,7 @@ export default function HomePage() {
                       />
                     </div>
                   ) : (
-                    <div className="h-32 w-full bg-gradient-to-br from-navy-950 via-navy-700 to-orange-500 flex items-center justify-center text-4xl">
+                    <div className="h-32 w-full bg-orange-500/15 flex items-center justify-center text-4xl">
                       {process.category.icon || categoryIcons[process.category.name] || "📁"}
                     </div>
                   )}
@@ -263,7 +263,7 @@ export default function HomePage() {
                         {process._count.steps} adım
                       </span>
                     </div>
-                    <h3 className="font-medium text-white mb-1.5 group-hover:text-orange-300 transition-colors line-clamp-2 leading-snug">
+                    <h3 className="font-medium text-orange-300 mb-1.5 group-hover:text-orange-300 transition-colors line-clamp-2 leading-snug">
                       {process.title}
                     </h3>
                     {process.description && (
@@ -285,7 +285,7 @@ export default function HomePage() {
                     )}
                     <div className="flex items-center justify-between pt-3 border-t border-white/10">
                       <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full gradient-box flex items-center justify-center text-white text-[10px] font-medium">
+                        <div className="w-6 h-6 rounded-full accent-box flex items-center justify-center text-white text-[10px] font-medium">
                           {process.author.name.charAt(0)}
                         </div>
                         <span className="text-xs text-slate-300">{process.author.name}</span>

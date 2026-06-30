@@ -47,12 +47,12 @@ export default function GirisPage() {
       <BackgroundBlobs />
       <div className="relative z-10 w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 mx-auto mb-5 rounded-xl gradient-box flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto mb-5 rounded-xl accent-box flex items-center justify-center">
             <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-white tracking-tight">Hesabınıza giriş yapın</h2>
+          <h2 className="text-xl font-semibold text-orange-300 tracking-tight">Hesabınıza giriş yapın</h2>
           <p className="text-sm text-slate-400 mt-1.5">Personel İş Akışı platformuna hoş geldiniz</p>
         </div>
 

@@ -262,8 +262,8 @@ export default function DuzenlePage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-bold text-white mb-8 flex items-center gap-2">
-        <span className="w-9 h-9 rounded-xl gradient-box flex items-center justify-center">
+      <h1 className="text-2xl font-bold text-orange-300 mb-8 flex items-center gap-2">
+        <span className="w-9 h-9 rounded-xl accent-box flex items-center justify-center">
           <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
           </svg>
@@ -283,7 +283,7 @@ export default function DuzenlePage() {
 
         {/* Temel Bilgiler */}
         <div className="card p-6 space-y-4">
-          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-orange-300 flex items-center gap-2">
             <span className="w-7 h-7 rounded-lg bg-orange-500/15 flex items-center justify-center text-xs text-orange-300 font-semibold">1</span>
             Temel Bilgiler
           </h2>
@@ -325,7 +325,7 @@ export default function DuzenlePage() {
         {/* Adımlar */}
         <div className="card p-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-orange-300 flex items-center gap-2">
               <span className="w-7 h-7 rounded-lg bg-orange-500/15 flex items-center justify-center text-xs text-orange-300 font-semibold">2</span>
               Adımlar ({steps.filter(s => !s.toDelete).length})
             </h2>
@@ -346,7 +346,7 @@ export default function DuzenlePage() {
                 onPaste={(e) => handlePaste(e, index)}
               >
                 <div className="flex justify-between items-center mb-3">
-                  <h3 className="font-medium text-white flex items-center gap-2">
+                  <h3 className="font-medium text-orange-300 flex items-center gap-2">
                     <span className="step-indicator text-xs">{step.order}</span>
                     Adım {step.order}
                     {step.isNew && <span className="text-xs text-emerald-300 font-normal ml-1">(Yeni)</span>}
