@@ -22,6 +22,20 @@ interface StepForm {
   images: { file: File; preview: string }[];
 }
 
+interface DraftStep {
+  description: string;
+}
+
+interface WorkflowDraft {
+  title: string;
+  description: string;
+  categoryId: string;
+  selectedTags: string[];
+  steps: DraftStep[];
+}
+
+const WORKFLOW_DRAFT_KEY = "personel-is-akisi:create-draft";
+
 function EkleForm() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -40,6 +54,7 @@ function EkleForm() {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const addStepButtonRef = useRef<HTMLButtonElement | null>(null);
   const [showFloatingAddStep, setShowFloatingAddStep] = useState(false);
+  const draftLoadedRef = useRef(false);
 
   useEffect(() => {
     async function loadOptions() {
@@ -77,27 +92,88 @@ function EkleForm() {
     return () => observer.disconnect();
   }, [session]);
 
+  useEffect(() => {
+    const rawDraft = localStorage.getItem(WORKFLOW_DRAFT_KEY);
+    if (!rawDraft) {
+      draftLoadedRef.current = true;
+      return;
+    }
+
+    void Promise.resolve().then(() => {
+      try {
+        const draft = JSON.parse(rawDraft) as Partial<WorkflowDraft>;
+        if (typeof draft.title === "string") setTitle(draft.title);
+        if (typeof draft.description === "string") setDescription(draft.description);
+        if (typeof draft.categoryId === "string") setCategoryId(draft.categoryId);
+        if (Array.isArray(draft.selectedTags)) {
+          setSelectedTags(draft.selectedTags.filter((tag): tag is string => typeof tag === "string"));
+        }
+        if (Array.isArray(draft.steps) && draft.steps.length > 0) {
+          setSteps(
+            draft.steps.map((step) => ({
+              description: typeof step.description === "string" ? step.description : "",
+              images: [],
+            }))
+          );
+        }
+      } catch {
+        localStorage.removeItem(WORKFLOW_DRAFT_KEY);
+      } finally {
+        draftLoadedRef.current = true;
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!draftLoadedRef.current) return;
+
+    const draft: WorkflowDraft = {
+      title,
+      description,
+      categoryId,
+      selectedTags,
+      steps: steps.map((step) => ({ description: step.description })),
+    };
+
+    const hasDraftContent =
+      title.trim() ||
+      description.trim() ||
+      categoryId ||
+      selectedTags.length > 0 ||
+      steps.some((step) => step.description.trim() || step.images.length > 0);
+
+    if (hasDraftContent) {
+      localStorage.setItem(WORKFLOW_DRAFT_KEY, JSON.stringify(draft));
+    } else {
+      localStorage.removeItem(WORKFLOW_DRAFT_KEY);
+    }
+  }, [categoryId, description, selectedTags, steps, title]);
+
   const addStep = () => {
-    setSteps([...steps, { description: "", images: [] }]);
+    setSteps((currentSteps) => [...currentSteps, { description: "", images: [] }]);
   };
 
   const removeStep = (index: number) => {
-    if (steps.length === 1) return;
-    setSteps(steps.filter((_, i) => i !== index));
+    setSteps((currentSteps) => {
+      if (currentSteps.length === 1) return currentSteps;
+      return currentSteps.filter((_, i) => i !== index);
+    });
   };
 
   const updateStep = (index: number, field: keyof StepForm, value: string | File[]) => {
-    const newSteps = [...steps];
-    if (field === "images" && Array.isArray(value)) {
-      const newImages = (value as File[]).map((file) => ({
-        file,
-        preview: URL.createObjectURL(file),
-      }));
-      newSteps[index].images = [...newSteps[index].images, ...newImages];
-    } else if (field === "description" && typeof value === "string") {
-      newSteps[index].description = value;
-    }
-    setSteps(newSteps);
+    setSteps((currentSteps) => {
+      const newSteps = [...currentSteps];
+      if (field === "images" && Array.isArray(value)) {
+        const newImages = value.map((file) => ({
+          file,
+          preview: URL.createObjectURL(file),
+        }));
+        newSteps[index].images = [...newSteps[index].images, ...newImages];
+      } else if (field === "description" && typeof value === "string") {
+        newSteps[index].description = value;
+      }
+      return newSteps;
+    });
   };
 
   const removeImage = (stepIndex: number, imageIndex: number) => {
@@ -178,6 +254,7 @@ function EkleForm() {
           }
         }
       }
+      localStorage.removeItem(WORKFLOW_DRAFT_KEY);
       router.push(`/is-akislari/${process.id}`);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Bir hata oluştu.");
