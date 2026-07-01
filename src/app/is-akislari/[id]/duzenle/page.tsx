@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
@@ -35,22 +35,32 @@ interface StepData {
   toDelete?: boolean;
 }
 
+interface ProcessTagData {
+  tag: { id: string };
+}
+
+interface ProcessImageData {
+  id: string;
+  url: string;
+}
+
+interface ProcessStepData {
+  id: string;
+  description: string | null;
+  order: number;
+  images: ProcessImageData[];
+}
 interface ProcessEditData {
   title: string;
   description: string | null;
   categoryId: string;
   author: { id: string };
-  tags: { tag: { id: string } }[];
-  steps: {
-    id: string;
-    description: string | null;
-    order: number;
-    images: { id: string; url: string }[];
-  }[];
+  tags: ProcessTagData[];
+  steps: ProcessStepData[];
 }
 
 export default function DuzenlePage() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const params = useParams();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -64,23 +74,64 @@ export default function DuzenlePage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [steps, setSteps] = useState<StepData[]>([]);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const addStepButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [showFloatingAddStep, setShowFloatingAddStep] = useState(false);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/giris");
+    }
+  }, [router, status]);
+
+
+  useEffect(() => {
+    if (loading) return;
+
+    const button = addStepButtonRef.current;
+    if (!button) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowFloatingAddStep(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+
+    observer.observe(button);
+
+    return () => observer.disconnect();
+  }, [loading]);
 
   useEffect(() => {
     if (!session) return;
-    async function load() {
+    const currentSession = session;
+
+    let cancelled = false;
+
+    async function loadData() {
       try {
         const [processRes, catRes, tagsRes] = await Promise.all([
           fetch(`/api/is-akislari/${params.id}`),
           fetch("/api/kategoriler"),
           fetch("/api/etiketler"),
         ]);
-        if (!processRes.ok) { router.push("/is-akislari"); return; }
-        const processData: ProcessEditData = await processRes.json();
-        const catData: Category[] = await catRes.json();
-        const tagsData: Tag[] = await tagsRes.json();
-        if (session?.user.role !== "ADMIN" && processData.author.id !== session?.user.id) {
-          router.push(`/is-akislari/${params.id}`); return;
+
+        if (!processRes.ok) {
+          router.push("/is-akislari");
+          return;
         }
+
+        const processData = (await processRes.json()) as ProcessEditData;
+        const catData = (await catRes.json()) as Category[];
+        const tagsData = (await tagsRes.json()) as Tag[];
+
+        if (
+          currentSession.user.role !== "ADMIN" &&
+          processData.author.id !== currentSession.user.id
+        ) {
+          router.push(`/is-akislari/${params.id}`);
+          return;
+        }
+
+        if (cancelled) return;
         setTitle(processData.title);
         setDescription(processData.description || "");
         setCategoryId(processData.categoryId);
@@ -97,11 +148,19 @@ export default function DuzenlePage() {
             toDelete: false,
           }))
         );
-      } catch (error) { console.error("Veri yüklenirken hata:", error); }
-      finally { setLoading(false); }
+      } catch (error) {
+        console.error("Veri yüklenirken hata:", error);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     }
-    load();
-  }, [session]);
+
+    void loadData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [params.id, router, session]);
 
   const addStep = () => {
     const maxOrder = steps.length > 0 ? Math.max(...steps.filter(s => !s.toDelete).map(s => s.order)) : 0;
@@ -128,8 +187,8 @@ export default function DuzenlePage() {
         isNew: true,
       }));
       newSteps[index].images = [...newSteps[index].images, ...newImages];
-    } else {
-      newSteps[index].description = value as string;
+    } else if (field === "description" && typeof value === "string") {
+      newSteps[index].description = value;
     }
     setSteps(newSteps);
   };
@@ -252,13 +311,15 @@ export default function DuzenlePage() {
     }
   }
 
-  if (loading) {
+  if (status === "loading" || loading) {
     return (
       <div className="flex justify-center items-center min-h-[80vh]">
         <Spinner size="lg" />
       </div>
     );
   }
+
+  if (!session) return null;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -329,7 +390,7 @@ export default function DuzenlePage() {
               <span className="w-7 h-7 rounded-lg bg-orange-500/15 flex items-center justify-center text-xs text-orange-300 font-semibold">2</span>
               Adımlar ({steps.filter(s => !s.toDelete).length})
             </h2>
-            <button type="button" onClick={addStep} className="btn-secondary text-sm py-1.5 px-3 flex items-center gap-1">
+            <button ref={addStepButtonRef} type="button" onClick={addStep} className="btn-secondary text-sm py-1.5 px-3 flex items-center gap-1">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
               Adım Ekle
             </button>
@@ -418,6 +479,20 @@ export default function DuzenlePage() {
           </button>
         </div>
       </form>
+
+      {showFloatingAddStep && (
+        <button
+          type="button"
+          onClick={addStep}
+          className="fixed bottom-6 right-6 z-40 btn-primary px-5 py-3 shadow-lg animate-fade-in-up md:right-8"
+          aria-label="Yeni adım ekle"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+          Adım Ekle
+        </button>
+      )}
 
       {/* Lightbox Modal */}
       {lightboxImage && (

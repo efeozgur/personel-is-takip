@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -23,7 +23,7 @@ interface StepForm {
 }
 
 function EkleForm() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -38,18 +38,44 @@ function EkleForm() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const addStepButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [showFloatingAddStep, setShowFloatingAddStep] = useState(false);
 
   useEffect(() => {
-    async function load() {
-      const [catRes, tagsRes] = await Promise.all([
+    async function loadOptions() {
+      const [categoriesRes, tagsRes] = await Promise.all([
         fetch("/api/kategoriler"),
         fetch("/api/etiketler"),
       ]);
-      setCategories(await catRes.json());
+
+      setCategories(await categoriesRes.json());
       setTags(await tagsRes.json());
     }
-    load();
+
+    void loadOptions();
   }, []);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/giris");
+    }
+  }, [router, status]);
+
+  useEffect(() => {
+    if (!session) return;
+
+    const button = addStepButtonRef.current;
+    if (!button) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowFloatingAddStep(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+
+    observer.observe(button);
+
+    return () => observer.disconnect();
+  }, [session]);
 
   const addStep = () => {
     setSteps([...steps, { description: "", images: [] }]);
@@ -68,8 +94,8 @@ function EkleForm() {
         preview: URL.createObjectURL(file),
       }));
       newSteps[index].images = [...newSteps[index].images, ...newImages];
-    } else {
-      newSteps[index].description = value as string;
+    } else if (field === "description" && typeof value === "string") {
+      newSteps[index].description = value;
     }
     setSteps(newSteps);
   };
@@ -160,7 +186,15 @@ function EkleForm() {
     }
   };
 
-  if (!session) { router.push("/giris"); return null; }
+  if (status === "loading") {
+    return (
+      <div className="flex justify-center items-center min-h-[80vh]">
+        <div className="w-10 h-10 rounded-full border-2 border-indigo-200 border-t-indigo-600 animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!session) return null;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -234,7 +268,7 @@ function EkleForm() {
               <span className="w-7 h-7 rounded-lg bg-orange-500/15 flex items-center justify-center text-xs text-orange-300 font-semibold">2</span>
               Adımlar
             </h2>
-            <button type="button" onClick={addStep} className="btn-secondary text-sm py-1.5 px-3 flex items-center gap-1">
+            <button ref={addStepButtonRef} type="button" onClick={addStep} className="btn-secondary text-sm py-1.5 px-3 flex items-center gap-1">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
               Adım Ekle
             </button>
@@ -305,6 +339,20 @@ function EkleForm() {
           </button>
         </div>
         </form>
+
+      {showFloatingAddStep && (
+        <button
+          type="button"
+          onClick={addStep}
+          className="fixed bottom-6 right-6 z-40 btn-primary px-5 py-3 shadow-lg animate-fade-in-up md:right-8"
+          aria-label="Yeni adım ekle"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+          Adım Ekle
+        </button>
+      )}
 
       {/* Lightbox Modal */}
       {lightboxImage && (
